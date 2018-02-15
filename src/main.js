@@ -13,6 +13,7 @@ import AppButton from './components/common/AppButton';
 import AppHeader from './components/common/AppHeader';
 import BaseColumn from './components/common/BaseColumn';
 import BaseRow from './components/common/BaseRow';
+import CardBoard from './components/common/CardBoard';
 import NavBar from './components/common/NavBar';
 
 
@@ -31,6 +32,7 @@ Vue.component('AppButton', AppButton);
 Vue.component('AppHeader', AppHeader);
 Vue.component('BaseColumn', BaseColumn);
 Vue.component('BaseRow', BaseRow);
+Vue.component('CardBoard', CardBoard);
 Vue.component('NavBar', NavBar);
 
 /* eslint-disable no-new */
