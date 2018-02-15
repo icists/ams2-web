@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <nav-bar></nav-bar>
+    <router-view id="router-view"/>
   </div>
 </template>
 
@@ -18,6 +18,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+#router-view {
   margin-top: 60px;
 }
 </style>

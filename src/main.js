@@ -9,6 +9,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App';
 import router from './router';
 
+import AppButton from './components/common/AppButton';
+import AppHeader from './components/common/AppHeader';
+import BaseColumn from './components/common/BaseColumn';
+import BaseRow from './components/common/BaseRow';
+import NavBar from './components/common/NavBar';
+
+
 Vue.config.productionTip = false;
 Vue.use(VueMq, {
   breakpoints: {
@@ -19,6 +26,12 @@ Vue.use(VueMq, {
   },
 });
 Vue.use(ElementUI, { locale });
+
+Vue.component('AppButton', AppButton);
+Vue.component('AppHeader', AppHeader);
+Vue.component('BaseColumn', BaseColumn);
+Vue.component('BaseRow', BaseRow);
+Vue.component('NavBar', NavBar);
 
 /* eslint-disable no-new */
 new Vue({
