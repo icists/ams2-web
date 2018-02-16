@@ -9,7 +9,7 @@
 
 <script>
   export default {
-    name: 'AppHeader',
+    name: 'BaseHeader',
 
     props: {
       text: {

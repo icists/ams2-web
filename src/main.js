@@ -9,6 +9,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App';
 import router from './router';
 
+import BaseButton from './components/common/BaseButton';
+import BaseCardBoard from './components/common/BaseCardBoard';
+import BaseColumn from './components/common/BaseColumn';
+import BaseHeader from './components/common/BaseHeader';
+import BaseNavBar from './components/common/BaseNavBar';
+import BaseRow from './components/common/BaseRow';
+
 Vue.config.productionTip = false;
 Vue.use(VueMq, {
   breakpoints: {
@@ -19,6 +26,13 @@ Vue.use(VueMq, {
   },
 });
 Vue.use(ElementUI, { locale });
+
+Vue.component('BaseButton', BaseButton);
+Vue.component('BaseHeader', BaseHeader);
+Vue.component('BaseColumn', BaseColumn);
+Vue.component('BaseRow', BaseRow);
+Vue.component('BaseCardBoard', BaseCardBoard);
+Vue.component('BaseNavBar', BaseNavBar);
 
 /* eslint-disable no-new */
 new Vue({
