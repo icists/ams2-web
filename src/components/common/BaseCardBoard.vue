@@ -24,11 +24,14 @@
 <style scoped>
   .cardboard {
     font-size: 1rem;
-    font-weight: bold;
     margin-bottom: 3rem;
     padding: 0.5rem 1rem 1rem;
     text-decoration: none;
     display: block;
     overflow: auto;
+
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
   }
 </style>

@@ -1,27 +1,38 @@
 <template>
   <div>
     <base-row>
-      <base-header text="Application" :size="1.8"/>
-      <base-card-board :color="green">
+      <base-card-board :color="colors.lightGray">
         <div class="text-holder">
-          <base-header text="Accepted" :color="white"/>
-          <p :style="{ color: white }">
+          <base-header :text="name"/>
+          <p>
+            From <span class="emphasis">{{country}}</span> <br/>
+            Studies <span class="emphasis">{{major}}</span> at <span class="emphasis">{{school}}</span>
+          </p>
+        </div>
+        <base-button link="/profile" :color="colors.black" outline>Edit Profile</base-button>
+      </base-card-board>
+
+      <base-header text="Application" :size="1.8"/>
+      <base-card-board :color="colors.green">
+        <div class="text-holder">
+          <base-header text="Accepted" :color="colors.white"/>
+          <p :style="{ color: colors.white }">
             Congratulations! You're accepted to the Early Application. <br/>
             Please proceed to order to confirm your participation.
           </p>
-          <base-button link="/order" :color="white" outline>Order</base-button>
-          <base-button link="/application" :color="white" outline>Review Application</base-button>
+          <base-button link="/order" :color="colors.white" outline>Order</base-button>
+          <base-button link="/application" :color="colors.white" outline>Review Application</base-button>
         </div>
       </base-card-board>
 
       <base-header text="Order" :size="1.8"/>
-      <base-card-board :color="lightGray">
+      <base-card-board :color="colors.lightGray">
         <div class="text-holder">
-          <base-header text="Order Now" :color="black"/>
+          <base-header text="Order Now" :color="colors.black"/>
           <p>
             Choose your accommodation option, meal plan, and so on.
           </p>
-          <base-button link="/order" :color="black" outline>Proceed</base-button>
+          <base-button link="/order" :color="colors.black" outline>Proceed</base-button>
         </div>
       </base-card-board>
     </base-row>
@@ -34,12 +45,19 @@
 
     data() {
       return {
-        red: '#CA4F40',
-        yellow: '#F4B352',
-        green: '#1DB100',
-        white: '#FFF',
-        lightGray: '#EEE',
-        black: '#000',
+        colors: {
+          red: '#CA4F40',
+          yellow: '#F4B352',
+          green: '#1DB100',
+          white: '#FFF',
+          lightGray: '#EEE',
+          gray: '#BBB',
+          black: '#000',
+        },
+        name: 'Jae-in Moon',
+        country: 'South Korea',
+        major: 'Politics and Presidency',
+        school: 'Blue House',
       };
     },
 
@@ -60,5 +78,9 @@
 
   .text-holder {
     padding-left: 1rem;
+  }
+
+  .emphasis {
+    font-weight: bold;
   }
 </style>

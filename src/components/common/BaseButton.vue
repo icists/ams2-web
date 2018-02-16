@@ -1,11 +1,11 @@
 <template>
-  <a
+  <router-link
+    :to="link"
     class="button"
-    :href="link"
     :style="outline ? styles.outline : styles.solid"
   >
     <slot/>
-  </a>
+  </router-link>
 </template>
 
 <script>

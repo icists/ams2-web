@@ -47,6 +47,6 @@
   }
 
   #router-view {
-    margin-top: 5rem;
+    margin-top: 8rem;
   }
 </style>
