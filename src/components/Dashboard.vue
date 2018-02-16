@@ -9,7 +9,8 @@
             Congratulations! You're accepted to the Early Application. <br/>
             Please proceed to order to confirm your participation.
           </p>
-          <base-button :color="white" outline>Order</base-button>
+          <base-button link="/order" :color="white" outline>Order</base-button>
+          <base-button link="/application" :color="white" outline>Review Application</base-button>
         </div>
       </base-card-board>
 
@@ -20,7 +21,7 @@
           <p>
             Choose your accommodation option, meal plan, and so on.
           </p>
-          <base-button :color="black" outline>Proceed</base-button>
+          <base-button link="/order" :color="black" outline>Proceed</base-button>
         </div>
       </base-card-board>
     </base-row>

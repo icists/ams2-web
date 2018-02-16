@@ -48,10 +48,10 @@
 
 <style scoped>
   .button {
-    font-size: 1rem;
-    font-weight: bold;
+    font-size: 1.3rem;
+    font-weight: bolder;
     margin: 0.4rem;
-    padding: 1rem 2rem;
+    padding: 0.8rem 1.5rem;
     text-decoration: none;
     display: inline-block;
     float: right;
