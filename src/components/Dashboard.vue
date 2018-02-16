@@ -1,41 +1,63 @@
 <template>
-  <div class="main">
-    <app-header :text="welcome_msg"></app-header>
-    <base-column xs="9" sm="12" md="15" lg="18">
-      <base-row>
-        <card-board></card-board>
-      </base-row>
-      <app-button color="blue" link="/registrations/"></app-button>`
-    </base-column>
-    <br/>
+  <div>
+    <base-row>
+      <base-header text="Application" :size="1.8"/>
+      <base-card-board :color="green">
+        <div class="text-holder">
+          <base-header text="Accepted" :color="white"/>
+          <p :style="{ color: white }">
+            Congratulations! You're accepted to the Early Application. <br/>
+            Please proceed to order to confirm your participation.
+          </p>
+          <base-button :color="white" outline>Order</base-button>
+        </div>
+      </base-card-board>
+
+      <base-header text="Order" :size="1.8"/>
+      <base-card-board :color="lightGray">
+        <div class="text-holder">
+          <base-header text="Order Now" :color="black"/>
+          <p>
+            Choose your accommodation option, meal plan, and so on.
+          </p>
+          <base-button :color="black" outline>Proceed</base-button>
+        </div>
+      </base-card-board>
+    </base-row>
   </div>
 </template>
 
 <script>
   export default {
     name: 'Dashboard',
+
     data() {
       return {
-        welcome_msg: 'Welcome to ICISTS 2018',
+        red: '#CA4F40',
+        yellow: '#F4B352',
+        green: '#1DB100',
+        white: '#FFF',
+        lightGray: '#EEE',
+        black: '#000',
       };
+    },
+
+    components: {
+      BaseButton: () => import('./common/BaseButton'),
+      BaseCardBoard: () => import('./common/BaseCardBoard'),
+      BaseHeader: () => import('./common/BaseHeader'),
+      BaseRow: () => import('./common/BaseRow'),
     },
   };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  h1, h2 {
-    font-weight: normal;
+  p {
+    font-size: 1.2rem;
+    line-height: 160%;
   }
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
-  a {
-    color: #42b983;
+
+  .text-holder {
+    padding-left: 1rem;
   }
 </style>

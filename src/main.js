@@ -9,13 +9,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App';
 import router from './router';
 
-import AppButton from './components/common/AppButton';
-import AppHeader from './components/common/AppHeader';
+import BaseButton from './components/common/BaseButton';
+import BaseCardBoard from './components/common/BaseCardBoard';
 import BaseColumn from './components/common/BaseColumn';
+import BaseHeader from './components/common/BaseHeader';
+import BaseNavBar from './components/common/BaseNavBar';
 import BaseRow from './components/common/BaseRow';
-import CardBoard from './components/common/CardBoard';
-import NavBar from './components/common/NavBar';
-
 
 Vue.config.productionTip = false;
 Vue.use(VueMq, {
@@ -28,12 +27,12 @@ Vue.use(VueMq, {
 });
 Vue.use(ElementUI, { locale });
 
-Vue.component('AppButton', AppButton);
-Vue.component('AppHeader', AppHeader);
+Vue.component('BaseButton', BaseButton);
+Vue.component('BaseHeader', BaseHeader);
 Vue.component('BaseColumn', BaseColumn);
 Vue.component('BaseRow', BaseRow);
-Vue.component('CardBoard', CardBoard);
-Vue.component('NavBar', NavBar);
+Vue.component('BaseCardBoard', BaseCardBoard);
+Vue.component('BaseNavBar', BaseNavBar);
 
 /* eslint-disable no-new */
 new Vue({

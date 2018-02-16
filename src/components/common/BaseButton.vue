@@ -4,13 +4,13 @@
     :href="link"
     :style="outline ? styles.outline : styles.solid"
   >
-    Apply
+    <slot/>
   </a>
 </template>
 
 <script>
   export default {
-    name: 'AppButton',
+    name: 'BaseButton',
 
     props: {
       link: {
@@ -54,5 +54,6 @@
     padding: 1rem 2rem;
     text-decoration: none;
     display: inline-block;
+    float: right;
   }
 </style>
