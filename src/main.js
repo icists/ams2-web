@@ -34,7 +34,9 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    count: 0,
+    policy: {
+      status: 'EARLY',
+    },
     colors: {
       icistsBlue: '#09073B',
       errorRed: '#a94442',
