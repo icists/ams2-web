@@ -8,7 +8,7 @@
       />
       <base-nav-bar-item
         to="/dashboard"
-        text="Gunwoo Kim"
+        :text="user.name"
         right
       />
     </base-nav-bar>
@@ -22,9 +22,8 @@
 
     data() {
       return {
-        colors: {
-          icistsBlue: '#09073B',
-        },
+        colors: this.$store.state.colors,
+        user: this.$store.state.user,
       };
     },
 

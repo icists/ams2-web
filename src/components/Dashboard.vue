@@ -3,10 +3,10 @@
     <base-row>
       <base-card-board :color="colors.lightGray">
         <div class="text-holder">
-          <base-header :text="name"/>
+          <base-header :text="user.name"/>
           <p>
-            From <span class="emphasis">{{country}}</span> <br/>
-            Studies <span class="emphasis">{{major}}</span> at <span class="emphasis">{{school}}</span>
+            From <span class="emphasis">{{user.country}}</span> <br/>
+            Studies <span class="emphasis">{{user.major}}</span> at <span class="emphasis">{{user.school}}</span>
           </p>
         </div>
         <base-button link="/profile" :color="colors.black" outline>Edit Profile</base-button>
@@ -45,19 +45,8 @@
 
     data() {
       return {
-        colors: {
-          red: '#CA4F40',
-          yellow: '#F4B352',
-          green: '#1DB100',
-          white: '#FFF',
-          lightGray: '#EEE',
-          gray: '#BBB',
-          black: '#000',
-        },
-        name: 'Jae-in Moon',
-        country: 'South Korea',
-        major: 'Politics and Presidency',
-        school: 'Blue House',
+        colors: this.$store.state.colors,
+        user: this.$store.state.user,
       };
     },
 
