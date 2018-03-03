@@ -34,12 +34,18 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
-    name: 'ApplicationFormEssay',
+    name: 'ApplicationFormBasic',
+
+    computed: mapGetters({
+      user: 'user',
+      form: 'form',
+    }),
 
     data() {
       return {
-        user: this.$store.state.user,
         policy: this.$store.state.policy,
         form: {
           group_name: '',

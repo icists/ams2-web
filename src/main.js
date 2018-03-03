@@ -2,14 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import VueMq from 'vue-mq';
-import Vuex from 'vuex';
 import VueFormWizard from 'vue-form-wizard';
 import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 
-import App from './App';
 import router from './router';
 
 import BaseButton from './components/common/BaseButton';
@@ -18,6 +16,26 @@ import BaseColumn from './components/common/BaseColumn';
 import BaseHeader from './components/common/BaseHeader';
 import BaseNavBar from './components/common/BaseNavBar';
 import BaseRow from './components/common/BaseRow';
+
+import axios from 'axios';
+import VueAxios from 'vue-axios';
+import VueAuth from '@websanova/vue-auth';
+
+Vue.router = router;
+Vue.use(VueAxios, axios);
+Vue.axios.defaults.baseURL = 'https://api.icists.org';
+Vue.use(VueAuth, {
+  authRedirect: '/',
+  refreshData: { url: '/api-token-refresh/', method: 'POST', enabled: false, interval: 30 },
+  loginData: { url: '/api-token-auth/', method: 'POST', redirect: '/', fetchUser: false },
+  fetchData: { url: '/accounts/profile/', enabled: false },
+  auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
+  router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
+});
+
+import App from './App';
+import store from './store';
 
 Vue.config.productionTip = false;
 Vue.use(VueMq, {
@@ -30,33 +48,6 @@ Vue.use(VueMq, {
 });
 Vue.use(ElementUI, { locale });
 Vue.use(VueFormWizard);
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
-  state: {
-    policy: {
-      status: 'EARLY',
-    },
-    colors: {
-      icistsBlue: '#09073B',
-      errorRed: '#a94442',
-      red: '#CA4F40',
-      yellow: '#F4B352',
-      green: '#1DB100',
-      white: '#FFF',
-      lightGray: '#EEE',
-      gray: '#BBB',
-      black: '#000',
-    },
-    user: {
-      name: 'Jae-in Moon',
-      country: 'South Korea',
-      major: 'Politics and Presidency',
-      school: 'Blue House',
-    },
-  },
-});
-
 
 Vue.component('BaseButton', BaseButton);
 Vue.component('BaseHeader', BaseHeader);

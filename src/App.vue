@@ -1,29 +1,51 @@
 <template>
   <div id="app">
-    <base-nav-bar :color="colors.icistsBlue">
-      <base-nav-bar-item
-        to="/"
-        text="ICISTS 2018"
-        bold
-      />
-      <base-nav-bar-item
-        to="/dashboard"
-        :text="user.name"
-        right
-      />
-    </base-nav-bar>
-    <router-view id="router-view"/>
+    <div v-if="$auth.ready()">
+      <base-nav-bar :color="colors.icistsBlue">
+        <base-nav-bar-item
+          to="/"
+          text="ICISTS 2018"
+          bold
+        />
+        <base-nav-bar-item
+          to="/dashboard"
+          :text="user.name"
+          right
+        />
+      </base-nav-bar>
+      <router-view id="router-view"/>
+    </div>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
   export default {
     name: 'app',
+
+    computed: mapGetters({
+      user: 'user',
+    }),
+
+    created() {
+      this.$auth.login({
+        data: { email: 'admin@icists.org', password: 'soloforever11' },
+        rememberMe: true,
+      })
+        .then((res) => {
+          console.log('success ', res);
+          this.$auth.token(null, res.data.token);
+          this.$store.dispatch('getUser');
+          this.$store.dispatch('getApplication');
+        }, (res) => {
+          console.log('error ' + this.context);
+          this.error = res.data;
+        });
+    },
 
     data() {
       return {
         colors: this.$store.state.colors,
-        user: this.$store.state.user,
       };
     },
 

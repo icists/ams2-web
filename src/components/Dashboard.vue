@@ -13,13 +13,10 @@
       </base-card-board>
 
       <base-header text="Application" :size="1.8"/>
-      <base-card-board :color="colors.green">
+      <base-card-board :color="colors[screening_colors[application.screening_result]]">
         <div class="text-holder">
-          <base-header text="Accepted" :color="colors.white"/>
-          <p :style="{ color: colors.white }">
-            Congratulations! You're accepted to the Early Application. <br/>
-            Please proceed to order to confirm your participation.
-          </p>
+          <base-header :text="screening_title[application.screening_result]" :color="colors.white"/>
+          <p :style="{ color: colors.white }">{{screening_text[application.screening_result]}}</p>
           <base-button link="/order" :color="colors.white" outline>Order</base-button>
           <base-button link="/application" :color="colors.white" outline>Review Application</base-button>
         </div>
@@ -40,13 +37,34 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
     name: 'Dashboard',
+
+    computed: mapGetters({
+      user: 'user',
+      application: 'application',
+    }),
 
     data() {
       return {
         colors: this.$store.state.colors,
-        user: this.$store.state.user,
+        screening_colors: {
+          P: 'yellow',
+          A: 'green',
+          R: 'red',
+        },
+        screening_title: {
+          P: 'Pending',
+          A: 'Accepted',
+          R: 'Rejected',
+        },
+        screening_text: {
+          P: 'Please wait for the review process.',
+          A: 'Congratulations! You\'re accepted to the Early Application.\nPlease proceed to order to confirm your participation.',
+          R: 'Unfortunately, blabla.',
+        },
       };
     },
 

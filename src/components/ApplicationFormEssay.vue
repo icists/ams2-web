@@ -6,12 +6,12 @@
 
     <base-row>
       <base-header text="Topic Preference" :size="1.0"/>
-      <select-input v-model="form.essay_topic" :options="essay_topic_options"></select-input>
+      <select-input v-model="form.essay_topic" :options="essayTopics"></select-input>
     </base-row>
 
     <base-row>
       <base-header text="Description" :size="1.0"/>
-      <p>{{essay_topic_options.find(topic => topic.value == form.essay_topic).description }}</p>
+      <p>{{essayTopics.find(topic => topic.value == form.essay_topic).description }}</p>
     </base-row>
 
     <base-row>
@@ -23,28 +23,25 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
+
   export default {
-    name: 'ApplicationForm2',
+    name: 'ApplicationFormEssay',
+
+    computed: mapGetters({
+      essayTopics: 'essayTopics',
+    }),
+
+    mounted() {
+      this.$store.dispatch('getAllEssayTopics');
+    },
 
     data() {
       return {
         form: {
-          essay_topic: '1',
+          essay_topic: 1,
           essay_content: 'This is my essay.',
         },
-        essay_topic_options: [{
-          value: '1',
-          label: 'Option1: Meditation Science is a bullshit.',
-          description: 'Let\'s cut the BS, Dr.SSC.',
-        }, {
-          value: '2',
-          label: 'Option2: Because Park Geun-hye says so.',
-          description: 'If you really want something, the universe will step up to help you and you will achieve your dreams.',
-        }, {
-          value: '3',
-          label: 'Option3: Little Paradise',
-          description: 'A young woman leaves the city to return to her hometown in the countryside.',
-        }],
       };
     },
 
@@ -57,6 +54,11 @@
       SelectInput: () => import('./common/SelectInput'),
       TextInput: () => import('./common/TextInput'),
     },
+
+    methods: {
+
+    },
+
   };
 </script>
 
