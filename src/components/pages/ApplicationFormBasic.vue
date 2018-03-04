@@ -18,16 +18,16 @@
       </base-column>
       <base-column>
         <base-header text="Topic Preference" :size="1.8"/>
-        <select-input v-model="form.topic_preference" :options="topic_preference_options"></select-input>
+        <select-input v-model="application.topic_preference" :options="projectTopics"></select-input>
       </base-column>
     </base-row>
 
     <base-row>
       <base-column>
         <base-header text="Radio" :size="1.8"/>
-        <switch-input v-model="form.need_visa_letters" :active_text="'Need Visa Letters'"></switch-input>
-        <switch-input v-model="form.need_financial_aid" :active_text="'Need Financial Aid'"></switch-input>
-        <switch-input v-model="form.previously_participated" :active_text="'Previously Participated'"></switch-input>
+        <switch-input v-model="application.visa_letter" :active_text="'Need Visa Letters'"></switch-input>
+        <switch-input v-model="application.financial_aid" :active_text="'Need Financial Aid'"></switch-input>
+        <switch-input v-model="application.previous_participation" :active_text="'Previously Participated'"></switch-input>
       </base-column>
     </base-row>
   </div>
@@ -41,7 +41,8 @@
 
     computed: mapGetters({
       user: 'user',
-      form: 'form',
+      application: 'application',
+      projectTopics: 'projectTopics',
     }),
 
     data() {
@@ -49,32 +50,28 @@
         policy: this.$store.state.policy,
         form: {
           group_name: '',
-          topic_preference: 'Option1',
-          need_visa_letters: true,
-          need_financial_aid: false,
-          previously_participated: true,
         },
         topic_preference_options: [{
-          value: 'Option1',
+          value: 1,
           label: 'Option1',
         }, {
-          value: 'Option2',
+          value: 2,
           label: 'Option2',
         }, {
-          value: 'Option3',
+          value: 3,
           label: 'Option3',
         }],
       };
     },
 
     components: {
-      BaseButton: () => import('./common/BaseButton'),
-      BaseCardBoard: () => import('./common/BaseCardBoard'),
-      BaseHeader: () => import('./common/BaseHeader'),
-      BaseRow: () => import('./common/BaseRow'),
-      SwitchInput: () => import('./common/SwitchInput'),
-      SelectInput: () => import('./common/SelectInput'),
-      TextInput: () => import('./common/TextInput'),
+      BaseButton: () => import('@/components/common/BaseButton'),
+      BaseCardBoard: () => import('@/components/common/BaseCardBoard'),
+      BaseHeader: () => import('@/components/common/BaseHeader'),
+      BaseRow: () => import('@/components/common/BaseRow'),
+      SwitchInput: () => import('@/components/common/SwitchInput'),
+      SelectInput: () => import('@/components/common/SelectInput'),
+      TextInput: () => import('@/components/common/TextInput'),
     },
   };
 </script>

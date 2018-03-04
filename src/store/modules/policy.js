@@ -1,4 +1,5 @@
-import policy from '../../api/policy';
+import Vapi from 'vuex-rest-api';
+import Vue from 'vue';
 
 function convertKeys(o, ok, nk) {
   if (ok !== nk) {
@@ -6,43 +7,38 @@ function convertKeys(o, ok, nk) {
       Object.getOwnPropertyDescriptor(o, ok));
   }
   return o;
-};
+}
 
-function parseEssayTopics(essayTopic) {
+function parseOptions(essayTopic) {
   return essayTopic
     .map(x => convertKeys(x, 'title', 'label'))
     .map(x => convertKeys(x, 'number', 'value'));
-};
+}
 
-// initial state
-const state = {
-  essayTopics: [],
-  status: 'EARLY',
-};
-
-// getters
-const getters = {
-  essayTopics: state => parseEssayTopics(state.essayTopics),
-};
-
-// actions
-const actions = {
-  getAllEssayTopics({ commit }) {
-    policy.getEssayTopics(products => {
-      commit('setEssayTopics', products);
-    });
+const policy = new Vapi({
+  baseURL: 'https://api.icists.org',
+  axios: Vue.axios,
+  state: {
+    essayTopics: [],
+    projectTopics: [],
+    status: 'EARLY',
   },
+})
+  .get({
+    action: 'getAllEssayTopics',
+    property: 'essayTopics',
+    path: '/policy/essay-topics/',
+  })
+  .get({
+    action: 'getAllProjectTopics',
+    property: 'projectTopics',
+    path: '/policy/project-topics/',
+  })
+  .getStore();
+
+policy.getters = {
+  essayTopics: state => parseOptions(state.essayTopics),
+  projectTopics: state => parseOptions(state.projectTopics),
 };
 
-const mutations = {
-  setEssayTopics(state, topics) {
-    state.essayTopics = topics;
-  },
-};
-
-export default {
-  state,
-  getters,
-  actions,
-  mutations,
-};
+export default policy;

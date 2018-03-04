@@ -20,22 +20,25 @@ import BaseRow from './components/common/BaseRow';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueAuth from '@websanova/vue-auth';
+import jwtAuth from './jwtAuth';
+
+import App from './App';
+import store from './store';
 
 Vue.router = router;
 Vue.use(VueAxios, axios);
 Vue.axios.defaults.baseURL = 'https://api.icists.org';
 Vue.use(VueAuth, {
-  authRedirect: '/',
+  authRedirect: { path: '/login' },
+  notFoundRedirect: { path: '/404' },
   refreshData: { url: '/api-token-refresh/', method: 'POST', enabled: false, interval: 30 },
-  loginData: { url: '/api-token-auth/', method: 'POST', redirect: '/', fetchUser: false },
+  loginData: { url: '/api-token-auth/', method: 'POST', redirect: '/dashboard', fetchUser: false },
   fetchData: { url: '/accounts/profile/', enabled: false },
-  auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  // auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  auth: jwtAuth,
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
 });
-
-import App from './App';
-import store from './store';
 
 Vue.config.productionTip = false;
 Vue.use(VueMq, {

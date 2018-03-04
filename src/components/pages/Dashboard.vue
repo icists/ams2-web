@@ -3,9 +3,9 @@
     <base-row>
       <base-card-board :color="colors.lightGray">
         <div class="text-holder">
-          <base-header :text="user.name"/>
+          <base-header :text="user.full_name"/>
           <p>
-            From <span class="emphasis">{{user.country}}</span> <br/>
+            From <span class="emphasis">{{user.nationality}}</span> <br/>
             Studies <span class="emphasis">{{user.major}}</span> at <span class="emphasis">{{user.school}}</span>
           </p>
         </div>
@@ -18,7 +18,7 @@
           <base-header :text="screening_title[application.screening_result]" :color="colors.white"/>
           <p :style="{ color: colors.white }">{{screening_text[application.screening_result]}}</p>
           <base-button link="/order" :color="colors.white" outline>Order</base-button>
-          <base-button link="/application" :color="colors.white" outline>Review Application</base-button>
+          <base-button link="/applications" :color="colors.white" outline>Review Application</base-button>
         </div>
       </base-card-board>
 
@@ -47,6 +47,10 @@
       application: 'application',
     }),
 
+    created() {
+      this.$store.dispatch('getApplication');
+    },
+
     data() {
       return {
         colors: this.$store.state.colors,
@@ -69,10 +73,10 @@
     },
 
     components: {
-      BaseButton: () => import('./common/BaseButton'),
-      BaseCardBoard: () => import('./common/BaseCardBoard'),
-      BaseHeader: () => import('./common/BaseHeader'),
-      BaseRow: () => import('./common/BaseRow'),
+      BaseButton: () => import('@/components/common/BaseButton'),
+      BaseCardBoard: () => import('@/components/common/BaseCardBoard'),
+      BaseHeader: () => import('@/components/common/BaseHeader'),
+      BaseRow: () => import('@/components/common/BaseRow'),
     },
   };
 </script>

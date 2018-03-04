@@ -1,6 +1,7 @@
 <template>
   <el-switch
-    v-model="value"
+    :value="value"
+    @input="updateValue($event)"
     :active-color="colors.green"
     :active-text="active_text"
   >
@@ -27,6 +28,12 @@
       return {
         colors: this.$store.state.colors,
       };
+    },
+
+    methods: {
+      updateValue(value) {
+        this.$emit('input', value);
+      },
     },
   };
 </script>

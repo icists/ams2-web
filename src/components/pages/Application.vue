@@ -18,12 +18,20 @@
 <script>
   export default {
     name: 'ApplicationFormWizard',
+
+    created() {
+      this.$store.dispatch('getApplication');
+      this.$store.dispatch('getAllEssayTopics');
+      this.$store.dispatch('getAllProjectTopics');
+    },
+
     data() {
       return {
         title: 'New Application',
         colors: this.$store.state.colors,
       };
     },
+
     methods: {
       onComplete() {
         alert('Yay. Done!');

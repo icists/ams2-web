@@ -1,33 +1,32 @@
-import user from '../../api/user';
+import Vapi from 'vuex-rest-api';
+import Vue from 'vue';
 
-// initial state
-const state = {
-  user: null,
-};
+const user = new Vapi({
+  baseURL: 'https://api.icists.org',
+  axios: Vue.axios,
+  state: {
+    user: null,
+  },
+})
+  .get({
+    action: 'getUser',
+    property: 'user',
+    path: '/accounts/profile/',
+    onSuccess: (state, payload) => {
+      // todo : need to set API design again.
+      const data = Object.assign({}, payload.data);
+      data.full_name = `${data.first_name} ${data.last_name}`;
+      data.major = 'Underwater Explosion';
+      state.user = data;
+    },
+  })
+  .getStore();
 
-// getters
-const getters = {
+user.getters = {
   user: state => state.user,
-};
-
-// actions
-const actions = {
-  getUser({ commit }) {
-    user.getUser(user => {
-      commit('setUser', user);
-    });
+  user_parsed(state) {
+    return state.user;
   },
 };
 
-const mutations = {
-  setUser(state, user) {
-    state.user = user;
-  },
-};
-
-export default {
-  state,
-  getters,
-  actions,
-  mutations,
-};
+export default user;

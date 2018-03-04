@@ -8,13 +8,21 @@
           bold
         />
         <base-nav-bar-item
+          v-if="$auth.check()"
+          @click.native='logout()'
+          to="/"
+          text="Log Out"
+          right
+        />
+        <base-nav-bar-item
+          v-if="$auth.check()"
           to="/dashboard"
-          :text="user.name"
+          :text="user.full_name"
           right
         />
       </base-nav-bar>
-      <router-view id="router-view"/>
     </div>
+    <router-view id="router-view"/>
   </div>
 </template>
 
@@ -23,24 +31,21 @@
   export default {
     name: 'app',
 
+    created() {
+      this.$store.dispatch('getUser');
+    },
+
     computed: mapGetters({
       user: 'user',
     }),
 
-    created() {
-      this.$auth.login({
-        data: { email: 'admin@icists.org', password: 'soloforever11' },
-        rememberMe: true,
-      })
-        .then((res) => {
-          console.log('success ', res);
-          this.$auth.token(null, res.data.token);
-          this.$store.dispatch('getUser');
-          this.$store.dispatch('getApplication');
-        }, (res) => {
-          console.log('error ' + this.context);
-          this.error = res.data;
+    methods: {
+      logout() {
+        this.$auth.logout({
+          makeRequest: false,
+          redirect: { path: '/login' },
         });
+      },
     },
 
     data() {

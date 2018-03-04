@@ -29,12 +29,9 @@
     name: 'ApplicationFormEssay',
 
     computed: mapGetters({
+      application: 'application',
       essayTopics: 'essayTopics',
     }),
-
-    mounted() {
-      this.$store.dispatch('getAllEssayTopics');
-    },
 
     data() {
       return {
@@ -46,13 +43,13 @@
     },
 
     components: {
-      BaseButton: () => import('./common/BaseButton'),
-      BaseCardBoard: () => import('./common/BaseCardBoard'),
-      BaseHeader: () => import('./common/BaseHeader'),
-      BaseRow: () => import('./common/BaseRow'),
-      SwitchInput: () => import('./common/SwitchInput'),
-      SelectInput: () => import('./common/SelectInput'),
-      TextInput: () => import('./common/TextInput'),
+      BaseButton: () => import('@/components/common/BaseButton'),
+      BaseCardBoard: () => import('@/components/common/BaseCardBoard'),
+      BaseHeader: () => import('@/components/common/BaseHeader'),
+      BaseRow: () => import('@/components/common/BaseRow'),
+      SwitchInput: () => import('@/components/common/SwitchInput'),
+      SelectInput: () => import('@/components/common/SelectInput'),
+      TextInput: () => import('@/components/common/TextInput'),
     },
 
     methods: {
