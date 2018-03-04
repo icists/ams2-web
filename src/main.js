@@ -24,10 +24,11 @@ import jwtAuth from './jwtAuth';
 
 import App from './App';
 import store from './store';
+import interceptor from './initializers/interceptor';
 
 Vue.router = router;
 Vue.use(VueAxios, axios);
-Vue.axios.defaults.baseURL = 'https://api.icists.org';
+Vue.axios.defaults.baseURL = 'http://api.icists.org';
 Vue.use(VueAuth, {
   authRedirect: { path: '/login' },
   notFoundRedirect: { path: '/404' },
@@ -39,6 +40,8 @@ Vue.use(VueAuth, {
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
 });
+
+interceptor();
 
 Vue.config.productionTip = false;
 Vue.use(VueMq, {

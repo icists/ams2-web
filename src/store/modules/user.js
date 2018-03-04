@@ -2,10 +2,10 @@ import Vapi from 'vuex-rest-api';
 import Vue from 'vue';
 
 const user = new Vapi({
-  baseURL: 'https://api.icists.org',
+  baseURL: 'http://api.icists.org',
   axios: Vue.axios,
   state: {
-    user: null,
+    user: {},
   },
 })
   .get({

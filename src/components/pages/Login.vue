@@ -57,7 +57,7 @@
           data: this.body,
           rememberMe: this.rememberMe,
           fetchUser: this.fetchUser,
-          redirect: { path: '/' },
+          redirect: { path: '/dashboard' },
         });
       },
     },

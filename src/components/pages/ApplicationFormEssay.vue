@@ -6,17 +6,17 @@
 
     <base-row>
       <base-header text="Topic Preference" :size="1.0"/>
-      <select-input v-model="form.essay_topic" :options="essayTopics"></select-input>
+      <select-input v-model="application.essay_topic" :options="essayTopics"></select-input>
     </base-row>
 
     <base-row>
       <base-header text="Description" :size="1.0"/>
-      <p>{{essayTopics.find(topic => topic.value == form.essay_topic).description }}</p>
+      <p>{{essayTopics.find(topic => topic.value == application.essay_topic).description }}</p>
     </base-row>
 
     <base-row>
       <base-header text="Your Essay" :size="1.0"/>
-      <text-input :type="'textarea'" :rows="5" v-model="form.essay_content"></text-input>
+      <text-input :type="'textarea'" :rows="5" v-model="application.essay_text"></text-input>
 
     </base-row>
   </div>
@@ -32,15 +32,6 @@
       application: 'application',
       essayTopics: 'essayTopics',
     }),
-
-    data() {
-      return {
-        form: {
-          essay_topic: 1,
-          essay_content: 'This is my essay.',
-        },
-      };
-    },
 
     components: {
       BaseButton: () => import('@/components/common/BaseButton'),

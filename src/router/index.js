@@ -4,6 +4,7 @@ import Dashboard from '@/components/pages/Dashboard';
 import Login from '@/components/pages/Login';
 import Application from '@/components/pages/Application';
 import NotFoundError from '@/components/pages/404';
+import InternalError from '@/components/pages/500';
 
 Vue.use(Router);
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/404',
       name: 'error-404',
       component: NotFoundError,
+    },
+    {
+      path: '/500',
+      name: 'error-500',
+      component: InternalError,
     },
   ],
 });

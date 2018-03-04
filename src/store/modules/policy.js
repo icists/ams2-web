@@ -16,7 +16,7 @@ function parseOptions(essayTopic) {
 }
 
 const policy = new Vapi({
-  baseURL: 'https://api.icists.org',
+  baseURL: 'http://api.icists.org',
   axios: Vue.axios,
   state: {
     essayTopics: [],

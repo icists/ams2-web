@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="user != null && application != null">
     <base-row>
       <base-card-board :color="colors.lightGray">
         <div class="text-holder">
@@ -48,6 +48,7 @@
     }),
 
     created() {
+      this.$store.dispatch('getUser');
       this.$store.dispatch('getApplication');
     },
 

@@ -20,6 +20,7 @@
     name: 'ApplicationFormWizard',
 
     created() {
+      this.$store.dispatch('getUser');
       this.$store.dispatch('getApplication');
       this.$store.dispatch('getAllEssayTopics');
       this.$store.dispatch('getAllProjectTopics');

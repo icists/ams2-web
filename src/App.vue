@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <div v-if="$auth.ready()">
+  <div id="app" v-if="$auth.ready()">
+    <div>
       <base-nav-bar :color="colors.icistsBlue">
         <base-nav-bar-item
           to="/"
@@ -30,10 +30,6 @@
   import { mapGetters } from 'vuex';
   export default {
     name: 'app',
-
-    created() {
-      this.$store.dispatch('getUser');
-    },
 
     computed: mapGetters({
       user: 'user',
