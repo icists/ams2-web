@@ -13,8 +13,22 @@ const application = new Vapi({
     property: 'application',
     path: '/registration/applications/',
     onSuccess: (state, payload) => {
-      state.application = payload.data[0];
+      if (payload.data.length > 0) {
+        state.application = payload.data[0];
+      } else {
+        state.application = {};
+      }
     },
+  })
+  .post({
+    action: 'createApplication',
+    property: 'application',
+    path: '/registration/applications/',
+  })
+  .put({
+    action: 'updateApplication',
+    property: 'application',
+    path: ({ id }) => `/registration/applications/${id}/`,
   })
   .getStore();
 

@@ -7,14 +7,14 @@
       </base-column>
       <base-column>
         <base-header text="Applicant" :size="1.8"/>
-        <base-header :text="user.name" :size="1.2"/>
+        <base-header :text="user.full_name" :size="1.2"/>
       </base-column>
     </base-row>
 
     <base-row>
       <base-column>
         <base-header text="Group" :size="1.8"/>
-        <text-input v-model="form.group_name"></text-input>
+        <text-input v-model="application.group"></text-input>
       </base-column>
       <base-column>
         <base-header text="Topic Preference" :size="1.8"/>
@@ -48,19 +48,6 @@
     data() {
       return {
         policy: this.$store.state.policy,
-        form: {
-          group_name: '',
-        },
-        topic_preference_options: [{
-          value: 1,
-          label: 'Option1',
-        }, {
-          value: 2,
-          label: 'Option2',
-        }, {
-          value: 3,
-          label: 'Option3',
-        }],
       };
     },
 

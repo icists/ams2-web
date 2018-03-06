@@ -4,6 +4,7 @@
                  :error-color="colors.errorRed"
                  >
       <h2 slot="title">{{title}}</h2>
+      <input type="hidden" v-model="application.id"/>
       <tab-content title="Basic Infos"
                    icon="ti-user">
         <application-form-basic></application-form-basic>
@@ -16,8 +17,15 @@
 </template>
 
 <script>
+  import { mapGetters, mapActions } from 'vuex';
+
   export default {
     name: 'ApplicationFormWizard',
+
+    computed: mapGetters({
+      application: 'application',
+    }),
+
 
     created() {
       this.$store.dispatch('getUser');
@@ -36,8 +44,24 @@
     methods: {
       onComplete() {
         alert('Yay. Done!');
+        if (this.application.id !== undefined) {
+          this.$store.dispatch('updateApplication', { params: { id: this.application.id }, data: this.application })
+            .then(() => {
+              this.$router.push('/');
+            });
+        } else {
+          this.$store.dispatch('createApplication', { data: this.application })
+            .then(() => {
+              this.$router.push('/');
+            });
+        }
       },
+      ...mapActions([
+        'createApplication',
+        'updateApplication',
+      ]),
     },
+
     components: {
       ApplicationFormBasic: () => import('./ApplicationFormBasic'),
       ApplicationFormEssay: () => import('./ApplicationFormEssay'),

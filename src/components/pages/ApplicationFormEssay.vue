@@ -11,13 +11,12 @@
 
     <base-row>
       <base-header text="Description" :size="1.0"/>
-      <p>{{essayTopics.find(topic => topic.value == application.essay_topic).description }}</p>
+      <p>{{ (essayTopics.find(topic => topic.value == application.essay_topic) || {}).description }}</p>
     </base-row>
 
     <base-row>
       <base-header text="Your Essay" :size="1.0"/>
-      <text-input :type="'textarea'" :rows="5" v-model="application.essay_text"></text-input>
-
+      <text-input :type="'textarea'" autosize :rows="5" v-model="application.essay_text"></text-input>
     </base-row>
   </div>
 </template>
