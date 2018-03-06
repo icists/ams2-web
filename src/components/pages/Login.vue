@@ -18,11 +18,9 @@
           <td><label><el-checkbox v-model="rememberMe" /> Remember Me</label></td>
         </tr><tr>
           <td></td>
-          <!--<td><label><input v-model="fetchUser" type="checkbox" /> Fetch User (test)</label></td>-->
-        </tr><tr>
-          <td></td>
           <td>
             <el-button native-type="submit">Login</el-button>
+            <el-button @click="$router.push('/register')">Register</el-button>
           </td>
         </tr></table>
 

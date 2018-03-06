@@ -6,11 +6,11 @@
       <h2 slot="title">{{title}}</h2>
       <input type="hidden" v-model="application.id"/>
       <tab-content title="Basic Infos"
-                   icon="ti-user">
+                   icon="el-icon-edit">
         <application-form-basic></application-form-basic>
       </tab-content>
       <tab-content title="Essay"
-                   icon="icon-letter">
+                   icon="el-icon-document">
         <application-form-essay></application-form-essay>
       </tab-content>
     </form-wizard>

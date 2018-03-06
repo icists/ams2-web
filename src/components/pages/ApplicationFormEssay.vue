@@ -6,12 +6,19 @@
 
     <base-row>
       <base-header text="Topic Preference" :size="1.0"/>
+      <el-select v-model="application.essay_topic" placeholder="Choose your topic for the essay.">
+        <el-option v-for="topic in essayTopics"
+                   :key="topic.number"
+                   :label="topic.title"
+                   :value="topic.number">
+        </el-option>
+      </el-select>
       <select-input v-model="application.essay_topic" :options="essayTopics"></select-input>
     </base-row>
 
     <base-row>
       <base-header text="Description" :size="1.0"/>
-      <p>{{ (essayTopics.find(topic => topic.value == application.essay_topic) || {}).description }}</p>
+      <p>{{ (application.essay_topic || {}).description }}</p>
     </base-row>
 
     <base-row>

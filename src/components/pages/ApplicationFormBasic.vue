@@ -18,7 +18,13 @@
       </base-column>
       <base-column>
         <base-header text="Topic Preference" :size="1.8"/>
-        <select-input v-model="application.topic_preference" :options="projectTopics"></select-input>
+        <el-select v-model="application.topic_preference">
+          <el-option v-for="topic in projectTopics"
+                     :key="topic.number"
+                     :label="topic.title"
+                     :value="topic.number">
+          </el-option>
+        </el-select>
       </base-column>
     </base-row>
 

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Dashboard from '@/components/pages/Dashboard';
 import Login from '@/components/pages/Login';
+import Register from '@/components/pages/Register';
 import Application from '@/components/pages/Application';
 import NotFoundError from '@/components/pages/404';
 import InternalError from '@/components/pages/500';
@@ -19,6 +20,12 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login,
+      meta: { auth: false },
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register,
       meta: { auth: false },
     },
     {

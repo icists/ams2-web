@@ -20,6 +20,16 @@ const user = new Vapi({
       state.user = data;
     },
   })
+  .post({
+    action: 'createUser',
+    property: 'user',
+    path: '/rest-auth/registration/',
+  })
+  .put({
+    action: 'updateUser',
+    property: 'user',
+    path: '/accounts/profile/',
+  })
   .getStore();
 
 user.getters = {

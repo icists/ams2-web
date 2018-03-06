@@ -35,7 +35,7 @@ Vue.use(VueAuth, {
   refreshData: { url: '/api-token-refresh/', method: 'POST', enabled: false, interval: 30 },
   loginData: { url: '/api-token-auth/', method: 'POST', redirect: '/dashboard', fetchUser: false },
   fetchData: { url: '/accounts/profile/', enabled: false },
-  // auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  registerData: { url: '/rest-auth/registration/', method: 'POST', redirect: '/' },
   auth: jwtAuth,
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
