@@ -6,12 +6,12 @@
         <table><tr>
           <td>Email:</td>
           <td>
-            <text-input v-model="body.email" type="text" placeholder="Email"></text-input>
+            <el-input v-model="body.email" type="text" placeholder="Email"></el-input>
           </td>
         </tr><tr>
           <td>Password:</td>
           <td>
-            <text-input v-model="body.password" type="password" placeholder="Password"></text-input>
+            <el-input v-model="body.password" type="password" placeholder="Password"></el-input>
           </td>
         </tr><tr>
           <td></td>
@@ -64,7 +64,6 @@
       BaseHeader: () => import('@/components/common/BaseHeader'),
       BaseRow: () => import('@/components/common/BaseRow'),
       BaseButton: () => import('@/components/common/BaseButton'),
-      TextInput: () => import('@/components/common/TextInput'),
     },
   };
 </script>

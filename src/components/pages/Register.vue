@@ -7,31 +7,31 @@
           <tr>
             <td>Email</td>
             <td>
-              <text-input v-model="user.email" type="text" placeholder="Email"></text-input>
+              <el-input v-model="user.email" type="text" placeholder="Email"></el-input>
             </td>
           </tr>
           <tr>
             <td>First Name</td>
             <td>
-              <text-input v-model="user.first_name" type="text" placeholder="David"></text-input>
+              <el-input v-model="user.first_name" type="text" placeholder="David"></el-input>
             </td>
           </tr>
           <tr>
             <td>Last Name</td>
             <td>
-              <text-input v-model="user.last_name" type="text" placeholder="Beckham"></text-input>
+              <el-input v-model="user.last_name" type="text" placeholder="Beckham"></el-input>
             </td>
           </tr>
           <tr>
             <td>Password</td>
             <td>
-              <text-input v-model="user.password1" type="password" placeholder="Password"></text-input>
+              <el-input v-model="user.password1" type="password" placeholder="Password"></el-input>
             </td>
           </tr>
           <tr>
             <td>Password Confirmation</td>
             <td>
-              <text-input v-model="user.password2" type="password" placeholder="Password"></text-input>
+              <el-input v-model="user.password2" type="password" placeholder="Password"></el-input>
             </td>
           </tr>
           <tr>
@@ -156,7 +156,6 @@
       BaseHeader: () => import('@/components/common/BaseHeader'),
       BaseRow: () => import('@/components/common/BaseRow'),
       BaseButton: () => import('@/components/common/BaseButton'),
-      TextInput: () => import('@/components/common/TextInput'),
     },
   };
 </script>

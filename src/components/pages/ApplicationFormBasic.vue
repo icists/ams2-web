@@ -14,7 +14,7 @@
     <base-row>
       <base-column>
         <base-header text="Group" :size="1.8"/>
-        <text-input v-model="application.group"></text-input>
+        <el-input v-model="application.group"></el-input>
       </base-column>
       <base-column>
         <base-header text="Topic Preference" :size="1.8"/>
@@ -31,9 +31,9 @@
     <base-row>
       <base-column>
         <base-header text="Radio" :size="1.8"/>
-        <switch-input v-model="application.visa_letter" :active_text="'Need Visa Letters'"></switch-input>
-        <switch-input v-model="application.financial_aid" :active_text="'Need Financial Aid'"></switch-input>
-        <switch-input v-model="application.previous_participation" :active_text="'Previously Participated'"></switch-input>
+        <el-switch v-model="application.visa_letter" :active-color="colors.green" active-text="Need Visa Letters" ></el-switch>
+        <el-switch v-model="application.financial_aid" :active-color="colors.green" active-text="Need Financial Aid" ></el-switch>
+        <el-switch v-model="application.previous_participation" :active-color="colors.green" active-text="Previously Participated" ></el-switch>
       </base-column>
     </base-row>
   </div>
@@ -53,6 +53,7 @@
 
     data() {
       return {
+        colors: this.$store.state.colors,
         policy: this.$store.state.policy,
       };
     },
@@ -62,9 +63,6 @@
       BaseCardBoard: () => import('@/components/common/BaseCardBoard'),
       BaseHeader: () => import('@/components/common/BaseHeader'),
       BaseRow: () => import('@/components/common/BaseRow'),
-      SwitchInput: () => import('@/components/common/SwitchInput'),
-      SelectInput: () => import('@/components/common/SelectInput'),
-      TextInput: () => import('@/components/common/TextInput'),
     },
   };
 </script>
