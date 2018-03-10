@@ -11,7 +11,7 @@ const user = new Vapi({
   .get({
     action: 'getUser',
     property: 'user',
-    path: '/accounts/profile/',
+    path: '/accounts/user/',
     onSuccess: (state, payload) => {
       // todo : need to set API design again.
       const data = Object.assign({}, payload.data);
@@ -28,7 +28,7 @@ const user = new Vapi({
   .put({
     action: 'updateUser',
     property: 'user',
-    path: '/accounts/profile/',
+    path: '/accounts/user/',
   })
   .getStore();
 

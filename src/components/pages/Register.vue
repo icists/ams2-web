@@ -40,6 +40,8 @@
               <el-date-picker
                 v-model="user.birthday"
                 type="date"
+                format="yyyy-MM-dd"
+                value-format="yyyy-MM-dd"
                 placeholder="Click">
               </el-date-picker>
             </td>
@@ -122,7 +124,7 @@
             { value: 'O', label: 'Other' },
           ],
           schools: [
-            { value: 'KAIST', label: 'KAIST' },
+            { value: 1, label: 'KAIST' },
           ],
           nationality: [
             { value: 'KR', label: 'Republic of Korea' },
