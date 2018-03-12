@@ -2,21 +2,30 @@
   <div v-if="user != null && application != null">
     <base-row>
       <base-card-board :color="colors.lightGray">
-        <div class="text-holder">
-          <base-header :text="user.full_name"/>
-          <p>
-            From <span class="emphasis">{{user.nationality}}</span> <br/>
-            Studies <span class="emphasis">{{user.major}}</span> at <span class="emphasis">{{user.school}}</span>
-          </p>
+        <base-header :text="user.full_name"/>
+        <p>
+          From <span class="emphasis">{{user.nationality}}</span> <br/>
+          Studies <span class="emphasis">{{user.major}}</span> at <span class="emphasis">{{user.school}}</span>
+        </p>
+        <div class="buttons">
+          <base-button
+            link="/profile"
+            :color="colors.black"
+            outline
+          >
+            Edit Profile
+          </base-button>
         </div>
-        <base-button link="/profile" :color="colors.black" outline>Edit Profile</base-button>
       </base-card-board>
 
       <base-header text="Application" :size="1.8"/>
       <base-card-board :color="colors[screening_colors[application.screening_result]]">
-        <div class="text-holder">
-          <base-header :text="screening_title[application.screening_result]" :color="colors.white"/>
-          <p :style="{ color: colors.white }">{{screening_text[application.screening_result]}}</p>
+        <base-header
+          :text="screening_title[application.screening_result]"
+          :color="colors.white"
+        />
+        <p :style="{ color: colors.white }">{{screening_text[application.screening_result]}}</p>
+        <div class="buttons">
           <base-button link="/order" :color="colors.white" outline>Order</base-button>
           <base-button link="/applications" :color="colors.white" outline>Review Application</base-button>
         </div>
@@ -24,11 +33,11 @@
 
       <base-header text="Order" :size="1.8"/>
       <base-card-board :color="colors.lightGray">
-        <div class="text-holder">
-          <base-header text="Order Now" :color="colors.black"/>
-          <p>
-            Choose your accommodation option, meal plan, and so on.
-          </p>
+        <base-header text="Order Now" :color="colors.black"/>
+        <p>
+          Choose your accommodation option, meal plan, and so on.
+        </p>
+        <div class="buttons">
           <base-button link="/order" :color="colors.black" outline>Proceed</base-button>
         </div>
       </base-card-board>
@@ -84,12 +93,16 @@
 
 <style scoped>
   p {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     line-height: 160%;
+    margin: 1rem 0 0.5rem;
+    letter-spacing: -0.2px;
   }
 
-  .text-holder {
-    padding-left: 1rem;
+  .buttons {
+    margin-right: -1rem;
+    display: inline-block;
+    float: right;
   }
 
   .emphasis {

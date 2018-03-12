@@ -32,5 +32,9 @@
     top: 0;
     width: 100%;
     padding: 1rem 0;
+
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
   }
 </style>

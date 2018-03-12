@@ -25,7 +25,7 @@
   .cardboard {
     font-size: 1rem;
     margin-bottom: 3rem;
-    padding: 0.5rem 1rem 1rem;
+    padding: 0.5rem 2rem 1rem;
     text-decoration: none;
     display: block;
     overflow: auto;
