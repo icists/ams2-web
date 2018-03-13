@@ -1,30 +1,52 @@
 <template>
-  <div id="app">
-    <base-nav-bar :color="colors.icistsBlue">
-      <base-nav-bar-item
-        to="/"
-        text="ICISTS 2018"
-        bold
-      />
-      <base-nav-bar-item
-        to="/dashboard"
-        text="Gunwoo Kim"
-        right
-      />
-    </base-nav-bar>
+  <div id="app" v-if="$auth.ready()">
+    <div>
+      <base-nav-bar :color="colors.icistsBlue">
+        <base-nav-bar-item
+          to="/"
+          text="ICISTS 2018"
+          bold
+        />
+        <base-nav-bar-item
+          v-if="$auth.check()"
+          @click.native='logout()'
+          to="/"
+          text="Log Out"
+          right
+        />
+        <base-nav-bar-item
+          v-if="$auth.check()"
+          to="/dashboard"
+          :text="user.full_name"
+          right
+        />
+      </base-nav-bar>
+    </div>
     <router-view id="router-view"/>
   </div>
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
   export default {
     name: 'app',
 
+    computed: mapGetters({
+      user: 'user',
+    }),
+
+    methods: {
+      logout() {
+        this.$auth.logout({
+          makeRequest: false,
+          redirect: { path: '/login' },
+        });
+      },
+    },
+
     data() {
       return {
-        colors: {
-          icistsBlue: '#09073B',
-        },
+        colors: this.$store.state.colors,
       };
     },
 

@@ -40,6 +40,7 @@
 
 <style scoped>
   .nav-bar-item {
+    font-size: 1.1rem;
     margin: 0 1rem;
     text-decoration: none;
     color: white;

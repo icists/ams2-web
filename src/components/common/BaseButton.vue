@@ -32,7 +32,6 @@
           solid: {
             color: '#FFF',
             backgroundColor: this.color,
-            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.12)',
           },
 
           outline: {
@@ -50,10 +49,14 @@
   .button {
     font-size: 1.3rem;
     font-weight: bolder;
+    letter-spacing: -0.2px;
     margin: 0.4rem;
     padding: 0.8rem 1.5rem;
     text-decoration: none;
     display: inline-block;
-    float: right;
+
+    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
   }
 </style>
