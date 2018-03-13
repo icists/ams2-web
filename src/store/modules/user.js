@@ -23,7 +23,7 @@ const user = new Vapi({
   .post({
     action: 'createUser',
     property: 'user',
-    path: '/rest-auth/registration/',
+    path: '/accounts/registration/',
   })
   .put({
     action: 'updateUser',

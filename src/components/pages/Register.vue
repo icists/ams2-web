@@ -139,8 +139,10 @@
 
     methods: {
       register() {
+        const user = this.user;
+        user.phone_number = '+' + user.phone_number
         this.$auth.register({
-          data: this.user,
+          data: user,
           success(res) {
             localStorage.setItem('default_auth_token', res.data.token);
             this.$router.push('/');
