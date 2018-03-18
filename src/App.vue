@@ -1,7 +1,7 @@
 <template>
   <div id="app" v-if="$auth.ready()">
     <div>
-      <base-nav-bar :color="colors.icistsBlue">
+      <base-nav-bar v-show="$route.path !== '/'" :color="colors.icistsBlue">
         <base-nav-bar-item
           to="/"
           text="ICISTS 2018"
@@ -66,9 +66,5 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-
-  #router-view {
-    margin-top: 8rem;
   }
 </style>
