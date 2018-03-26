@@ -22,7 +22,10 @@
         />
       </base-nav-bar>
     </div>
-    <router-view id="router-view"/>
+    <router-view
+      id="router-view"
+      :class="{ margin: $route.path !== '/' }"
+    />
   </div>
 </template>
 
@@ -39,7 +42,7 @@
       logout() {
         this.$auth.logout({
           makeRequest: false,
-          redirect: { path: '/login' },
+          redirect: { path: '/' },
         });
       },
     },
@@ -66,5 +69,9 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .margin {
+    margin-top: 8rem;
   }
 </style>
