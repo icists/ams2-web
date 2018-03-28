@@ -28,7 +28,7 @@ import interceptor from './initializers/interceptor';
 
 Vue.router = router;
 Vue.use(VueAxios, axios);
-Vue.axios.defaults.baseURL = 'http://api.icists.org';
+Vue.axios.defaults.baseURL = 'http://api.dev-icists.org';
 Vue.use(VueAuth, {
   authRedirect: { path: '/login' },
   notFoundRedirect: { path: '/404' },

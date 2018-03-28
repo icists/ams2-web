@@ -2,7 +2,6 @@ import Vapi from 'vuex-rest-api';
 import Vue from 'vue';
 
 const application = new Vapi({
-  baseURL: 'http://api.icists.org',
   axios: Vue.axios,
   state: {
     application: null,
