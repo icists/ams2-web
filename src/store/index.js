@@ -15,6 +15,7 @@ export default new Vuex.Store({
   state: {
     colors: {
       icistsBlue: '#09073B',
+      mediumBlue: '#004D7F',
       errorRed: '#a94442',
       red: '#CA4F40',
       yellow: '#F3B353',

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Main from '@/components/pages/Main';
 import Dashboard from '@/components/pages/Dashboard';
-import Login from '@/components/pages/Login';
 import Register from '@/components/pages/Register';
 import Application from '@/components/pages/Application';
 import NotFoundError from '@/components/pages/404';
@@ -14,12 +14,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: { name: 'Dashboard' },
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login,
+      name: 'Main',
+      component: Main,
       meta: { auth: false },
     },
     {

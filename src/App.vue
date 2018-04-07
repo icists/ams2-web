@@ -1,7 +1,7 @@
 <template>
   <div id="app" v-if="$auth.ready()">
     <div>
-      <base-nav-bar :color="colors.icistsBlue">
+      <base-nav-bar v-show="$route.path !== '/'" :color="colors.icistsBlue">
         <base-nav-bar-item
           to="/"
           text="ICISTS 2018"
@@ -22,7 +22,10 @@
         />
       </base-nav-bar>
     </div>
-    <router-view id="router-view"/>
+    <router-view
+      id="router-view"
+      :class="{ margin: $route.path !== '/' }"
+    />
   </div>
 </template>
 
@@ -39,7 +42,7 @@
       logout() {
         this.$auth.logout({
           makeRequest: false,
-          redirect: { path: '/login' },
+          redirect: { path: '/' },
         });
       },
     },
@@ -68,7 +71,7 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  #router-view {
+  .margin {
     margin-top: 8rem;
   }
 </style>
