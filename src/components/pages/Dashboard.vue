@@ -2,7 +2,7 @@
   <div v-if="user != null && application != null">
     <base-row>
       <base-card-board :color="colors.lightGray">
-        <base-header :text="user.full_name"/>
+        <base-header :text="user.fullName"/>
         <p>
           From <span class="emphasis">{{user.nationality}}</span> <br/>
           Studies <span class="emphasis">{{user.major}}</span> at <span class="emphasis">{{user.school}}</span>
@@ -19,12 +19,12 @@
       </base-card-board>
 
       <base-header text="Application" :size="1.8"/>
-      <base-card-board :color="colors[screening_colors[application.screening_result]]">
+      <base-card-board :color="appStatus.color">
         <base-header
-          :text="screening_title[application.screening_result]"
+          :text="appStatus.title"
           :color="colors.white"
         />
-        <p :style="{ color: colors.white }">{{screening_text[application.screening_result]}}</p>
+        <p :style="{ color: colors.white }">{{appStatus.text}}</p>
         <div class="buttons">
           <base-button link="/order" :color="colors.white" outline>Order</base-button>
           <base-button link="/applications" :color="colors.white" outline>Review Application</base-button>
@@ -51,33 +51,50 @@
   export default {
     name: 'Dashboard',
 
-    computed: mapGetters({
-      user: 'user',
-      application: 'application',
-    }),
+    computed: {
+      ...mapGetters({
+        user: 'user',
+        application: 'application',
+      }),
+      appStatus: function() {
+        return this.appResults[this.application.screeningResult];
+      },
+      orderStatus: function() {
+        return {
+          disabled: this.application.screeningResult !== 'A',
+        }
+      }
+    },
 
     created() {
       this.$store.dispatch('getUser');
       this.$store.dispatch('getApplication');
     },
 
+    mounted() {
+      console.log(this.application);
+    },
+
     data() {
+      const colors = this.$store.state.colors;
       return {
-        colors: this.$store.state.colors,
-        screening_colors: {
-          P: 'yellow',
-          A: 'green',
-          R: 'red',
-        },
-        screening_title: {
-          P: 'Pending',
-          A: 'Accepted',
-          R: 'Rejected',
-        },
-        screening_text: {
-          P: 'Please wait for the review process.',
-          A: 'Congratulations! You\'re accepted to the Early Application.\nPlease proceed to order to confirm your participation.',
-          R: 'Unfortunately, blabla.',
+        colors,
+        appResults: {
+          P: {
+            color: colors.yellow,
+            title: 'Pending',
+            text: 'Please wait for the review process.',
+          },
+          A: {
+            color: colors.green,
+            title: 'Accepted',
+            text: 'Congratulations! You\'re accepted to the Early Application. Please proceed to order to confirm your participation.',
+          },
+          R: {
+            color: colors.red,
+            title: 'Rejected',
+            text: 'Unfortunately, blah blah.',
+          },
         },
       };
     },

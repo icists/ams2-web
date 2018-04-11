@@ -13,9 +13,10 @@ const user = new Vapi({
     path: '/accounts/user/',
     onSuccess: (state, payload) => {
       // todo : need to set API design again.
-      const data = Object.assign({}, payload.data);
-      data.full_name = `${data.first_name} ${data.last_name}`;
+      const { data } = payload;
+      data.fullName = `${data.firstName} ${data.lastName}`;
       data.major = 'Underwater Explosion';
+      data.school = 'KAIST';
       state.user = data;
     },
   })

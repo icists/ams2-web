@@ -1,7 +1,11 @@
 <template>
   <div id="app" v-if="$auth.ready()">
     <div>
-      <base-nav-bar v-show="$route.path !== '/'" :color="colors.icistsBlue">
+      <base-nav-bar
+        v-show="$route.path !== '/'"
+        :color="colors.icistsBlue"
+        style="z-index: 1"
+      >
         <base-nav-bar-item
           to="/"
           text="ICISTS 2018"
@@ -73,5 +77,6 @@
 
   .margin {
     margin-top: 8rem;
+    margin-bottom: 8rem;
   }
 </style>
