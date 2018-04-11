@@ -40,6 +40,8 @@
 <style scoped>
   .header {
     letter-spacing: -0.8px;
+    font-family: 'Helvetica Neue', sans-serif;
     font-weight: bolder;
+    margin-top: 0.67em;
   }
 </style>

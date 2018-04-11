@@ -1,19 +1,91 @@
 <template>
-    <form-wizard @on-complete="onComplete"
-                 :color="colors.icistsBlue"
-                 :error-color="colors.errorRed"
-                 >
-      <h2 slot="title">{{title}}</h2>
-      <input type="hidden" v-model="application.id"/>
-      <tab-content title="Basic Infos"
-                   icon="el-icon-edit">
-        <application-form-basic></application-form-basic>
-      </tab-content>
-      <tab-content title="Essay"
-                   icon="el-icon-document">
-        <application-form-essay></application-form-essay>
-      </tab-content>
-    </form-wizard>
+  <div>
+    <base-row>
+      <sui-form equalWidth size="large">
+        <base-header text="Application" class="header" />
+        <sui-form-fields :field="2">
+          <sui-form-field>
+            <label>Stage</label>
+            <input :value="policy.status" disabled />
+          </sui-form-field>
+          <sui-form-field>
+            <label>Applicant</label>
+            <input :value="user.fullName" disabled />
+          </sui-form-field>
+        </sui-form-fields>
+        <sui-form-fields :field="2">
+          <sui-form-field>
+            <label>Group</label>
+            <input :value="application.group" />
+          </sui-form-field>
+          <sui-form-field>
+            <label>Topic Preference</label>
+            <sui-dropdown
+              placeholder="Select a topic"
+              selection
+              v-model="application.topicPreference"
+              :options="projectTopicOptions"
+            />
+          </sui-form-field>
+        </sui-form-fields>
+        <sui-form-field>
+          <label>Additional Questions</label>
+          <sui-form-field>
+            <sui-checkbox
+              toggle
+              v-model="application.visaLetter"
+              label="Do you need a visa supporting letter to enter South Korea?"
+            />
+          </sui-form-field>
+          <sui-form-field>
+            <sui-checkbox
+              toggle
+              v-model="application.financialAid"
+              label="Are you applying for a financial aid?"
+            />
+          </sui-form-field>
+          <sui-form-field>
+            <sui-checkbox
+              toggle
+              v-model="application.previousParticipation"
+              label="Have you participated in ICISTS before?"
+            />
+          </sui-form-field>
+        </sui-form-field>
+        <div style="height: 60px" />
+        <base-header text="Essay" class="header" />
+        <sui-form-field>
+          <label>Essay Topic</label>
+          <sui-dropdown
+            placeholder="Select a topic"
+            selection
+            v-model="application.essayTopic"
+            :options="essayTopicOptions"
+          />
+        </sui-form-field>
+        <sui-form-field>
+          <label>Description</label>
+          <p>{{essayTopicDescription}}</p>
+        </sui-form-field>
+        <sui-form-field style="margin-top: 2rem">
+          <label>Your Essay</label>
+          <textarea
+            placeholder="Write your inspiring essay here."
+            rows="5"
+            v-model="application.essayText"
+          />
+        </sui-form-field>
+      </sui-form>
+      <base-button
+        id="save-button"
+        link="/dashboard"
+        :color="colors.icistsBlue"
+        @click.native="onComplete()"
+      >
+        Save
+      </base-button>
+    </base-row>
+  </div>
 </template>
 
 <script>
@@ -22,10 +94,31 @@
   export default {
     name: 'ApplicationFormWizard',
 
-    computed: mapGetters({
-      application: 'application',
-    }),
-
+    computed: {
+      ...mapGetters({
+        user: 'user',
+        application: 'application',
+        projectTopics: 'projectTopics',
+        essayTopics: 'essayTopics',
+      }),
+      projectTopicOptions: function() {
+        return this.projectTopics.map(({ number, title }) => ({
+          value: number,
+          text: title,
+        }));
+      },
+      essayTopicOptions: function() {
+        return this.essayTopics.map(({ number, title }) => ({
+          value: number,
+          text: title,
+        }));
+      },
+      essayTopicDescription: function() {
+        const selectedTopicNumber = this.application.essayTopic;
+        const selectedTopic = this.essayTopics.find(topic => topic.number === selectedTopicNumber);
+        return selectedTopic ? selectedTopic.description : '';
+      },
+    },
 
     created() {
       this.$store.dispatch('getUser');
@@ -36,24 +129,23 @@
 
     data() {
       return {
-        title: 'New Application',
         colors: this.$store.state.colors,
+        policy: this.$store.state.policy,
       };
     },
 
     methods: {
-      onComplete() {
+      async onComplete() {
         alert('Yay. Done!');
         if (this.application.id !== undefined) {
-          this.$store.dispatch('updateApplication', { params: { id: this.application.id }, data: this.application })
-            .then(() => {
-              this.$router.push('/');
-            });
+          await this.$store.dispatch('updateApplication', {
+            params: { id: this.application.id },
+            data: this.application,
+          });
+          this.$router.push('/');
         } else {
-          this.$store.dispatch('createApplication', { data: this.application })
-            .then(() => {
-              this.$router.push('/');
-            });
+          await this.$store.dispatch('createApplication', { data: this.application });
+          this.$router.push('/');
         }
       },
       ...mapActions([
@@ -63,8 +155,30 @@
     },
 
     components: {
-      ApplicationFormBasic: () => import('./ApplicationFormBasic'),
-      ApplicationFormEssay: () => import('./ApplicationFormEssay'),
+      BaseButton: () => import('@/components/common/BaseButton'),
+      BaseColumn: () => import('@/components/common/BaseColumn'),
+      BaseHeader: () => import('@/components/common/BaseHeader'),
+      BaseRow: () => import('@/components/common/BaseRow'),
     },
   };
 </script>
+
+<style scoped>
+  label {
+    margin-bottom: 1rem !important;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+  }
+
+  .autofill {
+    font-size: 1.4rem;
+    font-weight: normal;
+  }
+
+  #save-button {
+    margin-top: 4rem;
+    float: right;
+  }
+</style>
