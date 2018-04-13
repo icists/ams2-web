@@ -16,7 +16,7 @@
             >
               <span class="button-text">Login</span>
             </base-button>
-            <base-button link="/" :color="colors.white">
+            <base-button link="/register" :color="colors.white">
               <span class="button-text">Create account</span>
             </base-button>
           </div>

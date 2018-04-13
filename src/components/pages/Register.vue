@@ -1,106 +1,93 @@
 <template>
   <div>
     <base-row>
-      <base-header text="Register"/>
-      <el-form @submit.native.prevent="register()">
-        <table>
-          <tr>
-            <td>Email</td>
-            <td>
-              <el-input v-model="user.email" type="text" placeholder="Email"></el-input>
-            </td>
-          </tr>
-          <tr>
-            <td>First Name</td>
-            <td>
-              <el-input v-model="user.first_name" type="text" placeholder="David"></el-input>
-            </td>
-          </tr>
-          <tr>
-            <td>Last Name</td>
-            <td>
-              <el-input v-model="user.last_name" type="text" placeholder="Beckham"></el-input>
-            </td>
-          </tr>
-          <tr>
-            <td>Password</td>
-            <td>
-              <el-input v-model="user.password1" type="password" placeholder="Password"></el-input>
-            </td>
-          </tr>
-          <tr>
-            <td>Password Confirmation</td>
-            <td>
-              <el-input v-model="user.password2" type="password" placeholder="Password"></el-input>
-            </td>
-          </tr>
-          <tr>
-            <td>Birthday</td>
-            <td>
-              <el-date-picker
-                v-model="user.birthday"
-                type="date"
-                format="yyyy-MM-dd"
-                value-format="yyyy-MM-dd"
-                placeholder="Click">
-              </el-date-picker>
-            </td>
-          </tr>
-          <tr>
-            <td>Nationality</td>
-            <td>
-              <el-select v-model="user.nationality" placeholder="Where are you from?">
-                <el-option v-for="gender in policy.nationality"
-                           :key="gender.value"
-                           :label="gender.label"
-                           :value="gender.value">
-                </el-option>
-              </el-select>
-            </td>
-          </tr>
-          <tr>
-            <td>School</td>
-            <td>
-              <el-select v-model="user.school" placeholder="Find your school">
-                <el-option v-for="item in policy.schools"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </td>
-          </tr>
-          <tr>
-            <td>Phone Number</td>
-            <td>
-              <el-input placeholder="Numbers Only!" v-model="user.phone_number">
-                <template slot="prepend">+</template>
-              </el-input>
-            </td>
-          </tr>
-          <tr>
-            <td>Gender</td>
-            <td>
-              <el-select v-model="user.gender" placeholder="Select Gender">
-                <el-option v-for="item in policy.genders"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value">
-                </el-option>
-              </el-select>
-            </td>
-          </tr>
-          <tr>
-            <td></td>
-            <td>
-              <el-button native-type="submit">Register</el-button>
-            </td>
-          </tr>
-        </table>
-
-        <div v-show="error" style="color:red; word-wrap:break-word;">{{ error }}</div>
-      </el-form>
-
+      <base-header text="Create an ICISTS account" class="header" />
+      <sui-form equalWidth size="large">
+        <sui-form-field>
+          <label>Email address</label>
+          <input v-model="user.email" type="email" placeholder="applying@icists.org" />
+        </sui-form-field>
+        <sui-form-fields :field="2">
+          <sui-form-field>
+            <label>Password</label>
+            <input
+              v-model="user.password1"
+              type="password"
+              placeholder="Longer than 8 characters"
+            />
+          </sui-form-field>
+          <sui-form-field>
+            <label>Confirm Password</label>
+            <input
+              v-model="user.password2"
+              type="password"
+              placeholder="Type it again"
+            />
+          </sui-form-field>
+        </sui-form-fields>
+        <sui-form-fields :field="2">
+          <sui-form-field>
+            <label>First Name</label>
+            <input v-model="user.firstName" placeholder="Harry" />
+          </sui-form-field>
+          <sui-form-field>
+            <label>Last Name</label>
+            <input v-model="user.lastName" placeholder="Potter" />
+          </sui-form-field>
+        </sui-form-fields>
+        <sui-form-fields :field="2">
+          <sui-form-field>
+            <label>Gender</label>
+            <sui-dropdown
+              selection
+              v-model="user.gender"
+              :options="policy.genders"
+            />
+          </sui-form-field>
+          <sui-form-field>
+            <label>Birthday</label>
+            <input v-model="user.birthday" placeholder="YYYY-MM-DD" />
+          </sui-form-field>
+        </sui-form-fields>
+        <sui-form-fields :field="2">
+          <sui-form-field>
+            <label>Nationality</label>
+            <sui-dropdown
+              placeholder="Select a country"
+              selection
+              v-model="user.nationality"
+              :options="policy.countries"
+            />
+          </sui-form-field>
+          <sui-form-field>
+            <label>Phone</label>
+            <input v-model="user.phoneNumber" />
+          </sui-form-field>
+        </sui-form-fields>
+        <sui-form-fields :field="2">
+          <sui-form-field>
+            <label>School</label>
+            <sui-dropdown
+              placeholder="Find your school"
+              selection
+              v-model="user.school"
+              :options="policy.schools"
+            />
+          </sui-form-field>
+          <sui-form-field>
+            <label>Major</label>
+            <input v-model="user.major" placeholder="Broomstick Engineering" />
+          </sui-form-field>
+        </sui-form-fields>
+      </sui-form>
+      <base-button
+        id="save-button"
+        link="/dashboard"
+        :color="colors.icistsBlue"
+        @click.native="register()"
+      >
+        Done
+      </base-button>
     </base-row>
   </div>
 </template>
@@ -119,15 +106,15 @@
       return {
         policy: {
           genders: [
-            { value: 'M', label: 'Male' },
-            { value: 'F', label: 'Female' },
-            { value: 'O', label: 'Other' },
+            { value: 'M', text: 'Male' },
+            { value: 'F', text: 'Female' },
+            { value: 'O', text: 'Other' },
           ],
           schools: [
-            { value: 1, label: 'KAIST' },
+            { value: 1, text: 'KAIST' },
           ],
-          nationality: [
-            { value: 'KR', label: 'Republic of Korea' },
+          countries: [
+            { value: 'KR', text: 'Republic of Korea' },
           ],
         },
         colors: this.$store.state.colors,
@@ -140,7 +127,7 @@
     methods: {
       register() {
         const user = this.user;
-        user.phone_number = '+' + user.phone_number
+        user.phoneNumber = '+' + user.phoneNumber
         this.$auth.register({
           data: user,
           success(res) {
@@ -163,3 +150,18 @@
     },
   };
 </script>
+
+<style scoped>
+  label {
+    margin-bottom: 1rem !important;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+  }
+
+  #save-button {
+    margin-top: 4rem;
+    float: right;
+  }
+</style>
