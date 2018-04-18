@@ -21,7 +21,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   // these devServer options should be customized in /config/index.js
   devServer: {
     headers: {
-      "Access-Control-Allow-Origin": "http://dev.icists.org",
+      "Access-Control-Allow-Origin": "http://" + HOST + ":" + PORT,
       "Access-Control-Allow-Credentials": "true",
       "Access-Control-Allow-Headers": "Content-Type, Authorization, x-id, Content-Length, X-Requested-With",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS"
