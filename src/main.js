@@ -28,7 +28,7 @@ Vue.router = router;
 Vue.use(VueAxios, axios);
 Vue.axios.defaults.baseURL = 'http://api.dev-icists.org';
 Vue.use(VueAuth, {
-  authRedirect: { path: '/login' },
+  authRedirect: { path: '/' },
   notFoundRedirect: { path: '/404' },
   refreshData: { url: '/accounts/token-refresh/', method: 'POST', enabled: false, interval: 30 },
   loginData: { url: '/accounts/token-auth/', method: 'POST', redirect: '/dashboard', fetchUser: false },

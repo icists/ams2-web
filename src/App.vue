@@ -7,7 +7,7 @@
         style="z-index: 1"
       >
         <base-nav-bar-item
-          to="/"
+          to="/dashboard"
           text="ICISTS 2018"
           bold
         />
@@ -21,7 +21,7 @@
         <base-nav-bar-item
           v-if="$auth.check()"
           to="/dashboard"
-          :text="user.full_name"
+          :text="user.fullName"
           right
         />
       </base-nav-bar>
