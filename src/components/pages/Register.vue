@@ -69,6 +69,7 @@
             <label>School</label>
             <sui-dropdown
               placeholder="Find your school"
+              search
               selection
               v-model="user.school"
               :options="policy.schools"
@@ -122,6 +123,15 @@
         fetchUser: false,
         error: false,
       };
+    },
+
+    async mounted() {
+      const response = await this.axios.get('accounts/countries/');
+      this.policy.countries = response.data.map(({ code, name }) => ({
+        flag: code.toLowerCase(),
+        value: code,
+        text: name,
+      }));
     },
 
     methods: {
