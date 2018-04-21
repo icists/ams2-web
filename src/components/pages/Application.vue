@@ -16,7 +16,7 @@
         <sui-form-fields :field="2">
           <sui-form-field>
             <label>Group</label>
-            <input :value="application.group" />
+            <input v-model="application.group" />
           </sui-form-field>
           <sui-form-field>
             <label>Topic Preference</label>
@@ -116,7 +116,7 @@
       essayTopicDescription: function() {
         const selectedTopicNumber = this.application.essayTopic;
         const selectedTopic = this.essayTopics.find(topic => topic.number === selectedTopicNumber);
-        return selectedTopic ? selectedTopic.description : '';
+        return selectedTopic ? selectedTopic.description : 'Select a topic first.';
       },
     },
 
@@ -142,10 +142,10 @@
             params: { id: this.application.id },
             data: this.application,
           });
-          this.$router.push('/');
+          this.$router.push('/dashboard');
         } else {
           await this.$store.dispatch('createApplication', { data: this.application });
-          this.$router.push('/');
+          this.$router.push('/dashboard');
         }
       },
       ...mapActions([

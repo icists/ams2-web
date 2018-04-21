@@ -15,8 +15,6 @@ const user = new Vapi({
       // todo : need to set API design again.
       const { data } = payload;
       data.fullName = `${data.firstName} ${data.lastName}`;
-      data.major = 'Underwater Explosion';
-      data.school = 'KAIST';
       state.user = data;
     },
   })
