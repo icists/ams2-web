@@ -4,8 +4,8 @@
       <base-card-board :color="colors.lightGray">
         <base-header :text="user.fullName"/>
         <p>
-          From <span class="emphasis">{{user.nationality}}</span> <br/>
-          Studies <span class="emphasis">{{user.major}}</span> at <span class="emphasis">{{user.school}}</span>
+          From <span class="emphasis">{{user.nationalityText}}</span> <br/>
+          Studies <span class="emphasis">{{user.major}}</span> at <span class="emphasis">{{user.schoolText}}</span>
         </p>
         <div class="buttons">
           <base-button
@@ -20,25 +20,35 @@
 
       <base-header text="Application" :size="1.8"/>
       <base-card-board :color="appStatus.color">
-        <base-header
-          :text="appStatus.title"
-          :color="colors.white"
-        />
-        <p :style="{ color: colors.white }">{{appStatus.text}}</p>
-        <div class="buttons">
-          <base-button link="/order" :color="colors.white" outline>Order</base-button>
-          <base-button link="/applications" :color="colors.white" outline>Review Application</base-button>
+        <base-header :text="appStatus.title" :color="appStatus.textColor"/>
+        <p class="instruction" :style="{ color: appStatus.textColor }">{{appStatus.text}}</p>
+        <div class="buttons" v-if="appStatus.buttons.length > 0">
+          <base-button
+            v-for="button of appStatus.buttons"
+            :key="button.text"
+            :link="button.link"
+            :color="appStatus.textColor"
+            outline
+          >
+            {{button.text}}
+          </base-button>
         </div>
       </base-card-board>
 
       <base-header text="Order" :size="1.8"/>
-      <base-card-board :color="colors.lightGray">
-        <base-header text="Order Now" :color="colors.black"/>
-        <p>
-          Choose your accommodation option, meal plan, and so on.
-        </p>
-        <div class="buttons">
-          <base-button link="/order" :color="colors.black" outline>Proceed</base-button>
+      <base-card-board :color="orderStatus.color">
+        <base-header :text="orderStatus.title" :color="orderStatus.textColor"/>
+        <p class="instruction" :style="{ color: orderStatus.textColor }">{{orderStatus.text}}</p>
+        <div class="buttons" v-if="orderStatus.buttons.length > 0">
+          <base-button
+            v-for="button of orderStatus.buttons"
+            :key="button.text"
+            :link="button.link"
+            :color="orderStatus.textColor"
+            outline
+          >
+            {{button.text}}
+          </base-button>
         </div>
       </base-card-board>
     </base-row>
@@ -57,13 +67,13 @@
         application: 'application',
       }),
       appStatus: function() {
-        return this.appResults[this.application.screeningResult];
+        const result = this.application.screeningResult || 'N';
+        return this.appResults[result];
       },
       orderStatus: function() {
-        return {
-          disabled: this.application.screeningResult !== 'A',
-        }
-      }
+        const result = this.application.screeningResult === 'A' ? 'ON' : 'NA';
+        return this.orderResults[result];
+      },
     },
 
     created() {
@@ -71,30 +81,66 @@
       this.$store.dispatch('getApplication');
     },
 
-    mounted() {
-      console.log(this.application);
-    },
-
     data() {
       const colors = this.$store.state.colors;
       return {
         colors,
         appResults: {
+          N: {
+            color: colors.lightGray,
+            textColor: colors.black,
+            title: 'Apply Now',
+            text: 'You can apply now for ICISTS 2017.\nGrab the chance to meet people and get inspired.',
+            buttons: [
+              { link: '/applications', text: 'Apply' },
+            ],
+          },
           P: {
             color: colors.yellow,
-            title: 'Pending',
-            text: 'Please wait for the review process.',
+            textColor: colors.white,
+            title: 'Waiting for Review',
+            text: 'Your application is waiting for organizing committee’s review.\nYou can revise it anytime before May 31st.',
+            buttons: [
+              { link: '/applications', text: 'Review Application' },
+            ],
           },
           A: {
             color: colors.green,
+            textColor: colors.white,
             title: 'Accepted',
-            text: 'Congratulations! You\'re accepted to the Early Application. Please proceed to order to confirm your participation.',
+            text: 'Congratulations! You\'re accepted to the Early Application.\nPlease proceed to order to confirm your participation.',
+            buttons: [
+              { link: '/order', text: 'Order' },
+              { link: '/applications', text: 'Review Application' },
+            ],
           },
           R: {
             color: colors.red,
+            textColor: colors.white,
             title: 'Rejected',
-            text: 'Unfortunately, blah blah.',
+            text: 'Unfortunately, your application is not eligible to ICISTS 2017. But you can still edit and submit again.',
+            buttons: [
+              { link: '/applications', text: 'Review Application' },
+            ],
           },
+        },
+        orderResults: {
+          NA: {
+            color: colors.lightGray,
+            textColor: colors.gray,
+            title: 'Not Available',
+            text: 'You can place your order after your application is accepted.',
+            buttons: [],
+          },
+          ON: {
+            color: colors.lightGray,
+            textColor: colors.black,
+            title: 'Order Now',
+            text: 'Choose your options for the conference.',
+            buttons: [
+              { link: '/order', text: 'Proceed' },
+            ]
+          }
         },
       };
     },
@@ -116,8 +162,13 @@
     letter-spacing: -0.2px;
   }
 
+  .instruction {
+    white-space: pre-line;
+  }
+
   .buttons {
     margin-right: -1rem;
+    margin-top: 1rem;
     display: inline-block;
     float: right;
   }
