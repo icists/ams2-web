@@ -4,11 +4,16 @@ import Vue from 'vue';
 const policy = new Vapi({
   axios: Vue.axios,
   state: {
+    stage: {},
     essayTopics: [],
     projectTopics: [],
-    status: 'EARLY',
   },
 })
+  .get({
+    action: 'getStage',
+    property: 'stage',
+    path: '/policy/stage/',
+  })
   .get({
     action: 'getAllEssayTopics',
     property: 'essayTopics',
@@ -22,6 +27,7 @@ const policy = new Vapi({
   .getStore();
 
 policy.getters = {
+  stage: state => state.stage.currentStage,
   essayTopics: state => state.essayTopics,
   projectTopics: state => state.projectTopics,
 };

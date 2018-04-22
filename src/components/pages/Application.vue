@@ -6,7 +6,7 @@
         <sui-form-fields :field="2">
           <sui-form-field>
             <label>Stage</label>
-            <input :value="policy.status" disabled />
+            <input :value="appStage" disabled />
           </sui-form-field>
           <sui-form-field>
             <label>Applicant</label>
@@ -98,6 +98,7 @@
       ...mapGetters({
         user: 'user',
         application: 'application',
+        stage: 'stage',
         projectTopics: 'projectTopics',
         essayTopics: 'essayTopics',
       }),
@@ -118,11 +119,16 @@
         const selectedTopic = this.essayTopics.find(topic => topic.number === selectedTopicNumber);
         return selectedTopic ? selectedTopic.description : 'Select a topic first.';
       },
+      appStage: function() {
+        const stage = (this.application && this.application.stage) || this.stage;
+        return this.stageMap[stage];
+      },
     },
 
     created() {
       this.$store.dispatch('getUser');
       this.$store.dispatch('getApplication');
+      this.$store.dispatch('getStage');
       this.$store.dispatch('getAllEssayTopics');
       this.$store.dispatch('getAllProjectTopics');
     },
@@ -130,21 +136,30 @@
     data() {
       return {
         colors: this.$store.state.colors,
-        policy: this.$store.state.policy,
+        stageMap: {
+          E: 'Early',
+          R: 'Regular',
+          L: 'Late',
+        },
       };
     },
 
     methods: {
       async onComplete() {
         alert('Yay. Done!');
-        if (this.application.id !== undefined) {
+        if (this.application.id) {
           await this.$store.dispatch('updateApplication', {
             params: { id: this.application.id },
             data: this.application,
           });
           this.$router.push('/dashboard');
         } else {
-          await this.$store.dispatch('createApplication', { data: this.application });
+          await this.$store.dispatch('createApplication', {
+            data: {
+              ...this.application,
+              stage: this.application.stage || this.stage,
+            },
+          });
           this.$router.push('/dashboard');
         }
       },
