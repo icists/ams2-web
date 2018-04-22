@@ -53,7 +53,8 @@
           <sui-form-field>
             <label>Nationality</label>
             <sui-dropdown
-              placeholder="Select a country"
+              placeholder="Select your country"
+              search
               selection
               v-model="user.nationality"
               :options="policy.countries"
@@ -83,7 +84,7 @@
       </sui-form>
       <base-button
         id="save-button"
-        link="/dashboard"
+        link="#"
         :color="colors.icistsBlue"
         @click.native="register()"
       >
@@ -114,9 +115,7 @@
           schools: [
             { value: 1, text: 'KAIST' },
           ],
-          countries: [
-            { value: 'KR', text: 'Republic of Korea' },
-          ],
+          countries: [],
         },
         colors: this.$store.state.colors,
         rememberMe: true,
@@ -137,14 +136,15 @@
     methods: {
       register() {
         const user = this.user;
-        user.phoneNumber = '+' + user.phoneNumber
         this.$auth.register({
           data: user,
           success(res) {
             localStorage.setItem('default_auth_token', res.data.token);
             this.$router.push('/');
           },
-          error() {},
+          error(error) {
+            alert('Something wrong with your registration form! Please check again.');
+          },
           rememberMe: true,
         });
       },

@@ -69,13 +69,17 @@
       onShowLogin() {
         this.showLogin = true;
       },
-      login() {
-        this.$auth.login({
-          data: this.body,
-          rememberMe: false,
-          fetchUser: false,
-          redirect: { path: '/dashboard' },
-        });
+      async login() {
+        try {
+          await this.$auth.login({
+            data: this.body,
+            rememberMe: false,
+            fetchUser: false,
+            redirect: { path: '/dashboard' },
+          });
+        } catch (error) {
+          alert('Incorrect email or password.')
+        }
       },
     },
 
