@@ -69,7 +69,7 @@
       }),
       appStatus: function() {
         const isClosed = ['E', 'R', 'L'].indexOf(this.stage) < 0;
-        const result = this.application.screeningResult || 'N';
+        const result = this.application.screeningResult || (isClosed ? 'C' : 'N');
         return this.appResults[result];
       },
       orderStatus: function() {
