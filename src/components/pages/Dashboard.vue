@@ -65,8 +65,10 @@
       ...mapGetters({
         user: 'user',
         application: 'application',
+        stage: 'stage',
       }),
       appStatus: function() {
+        const isClosed = ['E', 'R', 'L'].indexOf(this.stage) < 0;
         const result = this.application.screeningResult || 'N';
         return this.appResults[result];
       },
@@ -79,6 +81,7 @@
     created() {
       this.$store.dispatch('getUser');
       this.$store.dispatch('getApplication');
+      this.$store.dispatch('getStage');
     },
 
     data() {
@@ -86,6 +89,13 @@
       return {
         colors,
         appResults: {
+          C: {
+            color: colors.lightGray,
+            textColor: colors.gray,
+            title: 'Closed',
+            text: 'Application is currently closed.\nPlease come back in a few days.',
+            buttons: [],
+          },
           N: {
             color: colors.lightGray,
             textColor: colors.black,
@@ -169,7 +179,6 @@
   .buttons {
     margin-right: -1rem;
     margin-top: 1rem;
-    display: inline-block;
     float: right;
   }
 
