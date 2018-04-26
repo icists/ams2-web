@@ -28,12 +28,14 @@
             id="input-email"
             v-model="body.email"
             placeholder="Email address"
+            v-on:keyup.enter="login()"
           />
           <input
             class="column"
             type="password"
             v-model="body.password"
             placeholder="Password"
+            v-on:keyup.enter="login()"
           />
           <base-button
             class="column"
