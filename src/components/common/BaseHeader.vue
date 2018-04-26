@@ -3,7 +3,15 @@
     class="header"
     :style="style"
   >
+    <span v-if="chunked_texts != null">
+      <span v-for="chunked_text in chunked_texts">
+        {{chunked_text}}
+        <br class="rwd-break">
+      </span>
+    </span>
+    <span v-else>
     {{text}}
+    </span>
   </h1>
 </template>
 
@@ -15,6 +23,10 @@
       text: {
         type: String,
         required: true,
+      },
+      chunked_texts: {
+        type: Array,
+        required: false,
       },
       color: {
         type: String,
@@ -43,5 +55,9 @@
     font-family: 'Helvetica Neue', sans-serif;
     font-weight: bolder;
     margin-top: 0.67em;
+  }
+
+  .lg .rwd-break {
+    display: none;
   }
 </style>

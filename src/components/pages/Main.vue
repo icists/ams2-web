@@ -2,9 +2,9 @@
   <div>
     <div id="background">
       <div>
-        <base-row v-show="!showLogin">
+        <base-row v-show="!showLogin" class="slogan-row">
           <base-header
-            text="Meet People, Get Inspired."
+            :chunked_texts="['Meet People,', 'Get Inspired.']"
             :color="colors.white"
             :size="3"
           />
@@ -132,5 +132,10 @@
   #input-email {
     border-bottom-color: #EEEEEE;
     border-bottom-width: 1px;
+  }
+
+  .slogan-row .row.lg {
+    padding-left: 0;
+    padding-right: 0;
   }
 </style>
