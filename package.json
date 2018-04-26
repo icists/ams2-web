@@ -24,6 +24,7 @@
     "vue-form-wizard": "^0.8.4",
     "vue-mq": "^0.1.0",
     "vue-router": "^3.0.1",
+    "vuelidate": "^0.6.2",
     "vuex": "^3.0.1",
     "vuex-rest-api": "^2.6.1"
   },

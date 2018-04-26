@@ -3,9 +3,14 @@
     <base-row>
       <base-header text="Create an ICISTS account" class="header" />
       <sui-form equalWidth size="large">
-        <sui-form-field>
+        <sui-form-field
+          v-bind:class="{ 'error': $v.user.email.$error }" >
           <label>Email address</label>
-          <input v-model="user.email" type="email" placeholder="applying@icists.org" />
+          <input v-model="user.email"
+                 @input="$v.user.email.$touch()"
+                 type="email"
+                 placeholder="applying@icists.org" />
+          <sui-label class="red pointing above" v-if="$v.user.email.$error"> Invalid Email </sui-label>
         </sui-form-field>
         <sui-form-fields :field="2">
           <sui-form-field>
@@ -60,9 +65,13 @@
               :options="policy.countries"
             />
           </sui-form-field>
-          <sui-form-field>
+          <sui-form-field
+            v-bind:class="{ 'error': $v.user.phoneNumber.$error }" >
             <label>Phone</label>
-            <input v-model="user.phoneNumber" />
+            <input v-model="user.phoneNumber"
+                   @input="$v.user.phoneNumber.$touch()"
+            />
+            <sui-label class="red pointing above" v-if="$v.user.phoneNumber.$error"> Invalid Phone Number (+XX-10-1234-5678) </sui-label>
           </sui-form-field>
         </sui-form-fields>
         <sui-form-fields :field="2">
@@ -96,6 +105,14 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
+  import { required, email, minLength } from 'vuelidate/lib/validators';
+
+  function phoneNumberValidation(value) {
+    if (typeof value === 'undefined' || value === null || value === '') {
+      return true;
+    }
+    return /^\+[0-9]*-[0-9]*-[0-9]*.*$/.test(value);
+  }
 
   export default {
     name: 'Register',
@@ -122,6 +139,21 @@
         fetchUser: false,
         error: false,
       };
+    },
+
+    validations: {
+      user: {
+        email: {
+          required,
+          email,
+          minLength: minLength(5),
+        },
+        phoneNumber: {
+          required,
+          phoneNumberValidation,
+          minLength: minLength(10),
+        },
+      },
     },
 
     async mounted() {
