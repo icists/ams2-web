@@ -3,9 +3,11 @@
 import Vue from 'vue';
 import VueMq from 'vue-mq';
 import VueFormWizard from 'vue-form-wizard';
+import Vuelidate from 'vuelidate';
 import SuiVue from 'semantic-ui-vue';
 import 'semantic-ui-css/semantic.min.css';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
+
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -38,6 +40,7 @@ Vue.use(VueAuth, {
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
 });
+Vue.use(Vuelidate);
 
 interceptor();
 
