@@ -4,7 +4,6 @@
       <base-nav-bar
         v-show="$route.path !== '/'"
         :color="colors.icistsBlue"
-        style="z-index: 1"
       >
         <base-nav-bar-item
           to="/dashboard"
