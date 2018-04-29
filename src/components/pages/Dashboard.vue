@@ -109,7 +109,7 @@
             color: colors.yellow,
             textColor: colors.white,
             title: 'Waiting for Review',
-            text: 'Your application is waiting for organizing committee’s review.\nYou can revise it anytime before May 31st.',
+            text: 'Your application is waiting for organizing committee’s review.\nYou can revise it anytime before May 30th.',
             buttons: [
               { link: '/applications', text: 'Review Application' },
             ],
