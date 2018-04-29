@@ -68,12 +68,12 @@
         <sui-form-fields :field="2">
           <sui-form-field>
             <label>School</label>
-            <sui-dropdown
+            <basic-select
               placeholder="Find your school"
-              search
-              selection
-              v-model="user.school"
               :options="policy.schools"
+              :selected-option="policy.schools.find(school => school.id === user.school)"
+              @searchchange="value => updateSchools(value)"
+              @select="(school) => { user.school = school.id }"
             />
           </sui-form-field>
           <sui-form-field>
@@ -96,6 +96,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
+  import { BasicSelect } from 'vue-search-select'
 
   export default {
     name: 'Register',
@@ -112,9 +113,7 @@
             { value: 'F', text: 'Female' },
             { value: 'O', text: 'Other' },
           ],
-          schools: [
-            { value: 1, text: 'KAIST' },
-          ],
+          schools: [],
           countries: [],
         },
         colors: this.$store.state.colors,
@@ -134,6 +133,9 @@
     },
 
     methods: {
+      ...mapActions([
+        'createUser',
+      ]),
       register() {
         const user = this.user;
         this.$auth.register({
@@ -148,15 +150,20 @@
           rememberMe: true,
         });
       },
-      ...mapActions([
-        'createUser',
-      ]),
+      async updateSchools(query) {
+        const response = await this.axios.get(`accounts/schools/?query=${query}`);
+        this.policy.schools = response.data.map(({ id, name }) => ({
+          value: id,
+          text: name,
+        }));
+      },
     },
 
     components: {
       BaseHeader: () => import('@/components/common/BaseHeader'),
       BaseRow: () => import('@/components/common/BaseRow'),
       BaseButton: () => import('@/components/common/BaseButton'),
+      BasicSelect,
     },
   };
 </script>
