@@ -6,28 +6,40 @@
         <sui-form-field
           v-bind:class="{ 'error': $v.user.email.$error }" >
           <label>Email address</label>
-          <input v-model="user.email"
-                 @input="$v.user.email.$touch()"
-                 type="email"
-                 placeholder="applying@icists.org" />
-          <sui-label class="red pointing above" v-if="$v.user.email.$error"> Invalid Email </sui-label>
+          <input
+            v-model="user.email"
+            @input="$v.user.email.$touch()"
+            type="email"
+            placeholder="applying@icists.org"
+          />
+          <sui-label class="red pointing above" v-if="$v.user.email.$error">
+            Invalid Email
+          </sui-label>
         </sui-form-field>
         <sui-form-fields :field="2">
-          <sui-form-field>
+          <sui-form-field :class="{ 'error': $v.user.password1.$error }">
             <label>Password</label>
             <input
               v-model="user.password1"
+              @input="$v.user.password1.$touch()"
               type="password"
               placeholder="Longer than 8 characters"
             />
+            <sui-label class="red pointing above" v-if="$v.user.password1.$error">
+              Too short
+            </sui-label>
           </sui-form-field>
-          <sui-form-field>
+          <sui-form-field :class="{ 'error': $v.user.password2.$error }">
             <label>Confirm Password</label>
             <input
               v-model="user.password2"
+              @input="$v.user.password2.$touch()"
               type="password"
               placeholder="Type it again"
             />
+            <sui-label class="red pointing above" v-if="$v.user.password2.$error">
+              Passwords do not match
+            </sui-label>
           </sui-form-field>
         </sui-form-fields>
         <sui-form-fields :field="2">
@@ -49,9 +61,16 @@
               :options="policy.genders"
             />
           </sui-form-field>
-          <sui-form-field>
+          <sui-form-field :class="{ 'error': $v.user.birthday.$error }">
             <label>Birthday</label>
-            <input v-model="user.birthday" placeholder="YYYY-MM-DD" />
+            <input
+              v-model="user.birthday"
+              @input="$v.user.birthday.$touch()"
+              placeholder="YYYY-MM-DD"
+            />
+            <sui-label class="red pointing above" v-if="$v.user.birthday.$error">
+              Invalid Birthday Format (YYYY-MM-DD)
+            </sui-label>
           </sui-form-field>
         </sui-form-fields>
         <sui-form-fields :field="2">
@@ -65,13 +84,15 @@
               :options="policy.countries"
             />
           </sui-form-field>
-          <sui-form-field
-            v-bind:class="{ 'error': $v.user.phoneNumber.$error }" >
+          <sui-form-field :class="{ 'error': $v.user.phoneNumber.$error }">
             <label>Phone</label>
-            <input v-model="user.phoneNumber"
-                   @input="$v.user.phoneNumber.$touch()"
+            <input
+              v-model="user.phoneNumber"
+              @input="$v.user.phoneNumber.$touch()"
             />
-            <sui-label class="red pointing above" v-if="$v.user.phoneNumber.$error"> Invalid Phone Number (+XX-10-1234-5678) </sui-label>
+            <sui-label class="red pointing above" v-if="$v.user.phoneNumber.$error">
+              Include Country Code (e.g. +82), No Hyphen
+            </sui-label>
           </sui-form-field>
         </sui-form-fields>
         <sui-form-fields :field="2">
@@ -105,13 +126,20 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  import { required, email, minLength } from 'vuelidate/lib/validators';
+  import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
 
   function phoneNumberValidation(value) {
     if (typeof value === 'undefined' || value === null || value === '') {
       return true;
     }
-    return /^\+[0-9]*-[0-9]*-[0-9]*.*$/.test(value);
+    return /^\+[0-9]*$/.test(value);
+  }
+  
+  function birthdayValidation(value) {
+    if (typeof value === 'undefined' || value === null || value === '') {
+      return true;
+    }
+    return /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$/.test(value);
   }
 
   export default {
@@ -148,9 +176,21 @@
           email,
           minLength: minLength(5),
         },
+        password1: {
+          required,
+          minLength: minLength(8),
+        },
+        password2: {
+          confirmed: sameAs('password1'),
+        },
         phoneNumber: {
           required,
           phoneNumberValidation,
+          minLength: minLength(10),
+        },
+        birthday: {
+          required,
+          birthdayValidation,
           minLength: minLength(10),
         },
       },
