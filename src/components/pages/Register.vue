@@ -57,7 +57,7 @@
               search
               selection
               v-model="user.nationality"
-              :options="policy.countries"
+              :options="countryOptions"
             />
           </sui-form-field>
           <sui-form-field>
@@ -73,7 +73,7 @@
               search
               selection
               v-model="user.school"
-              :options="policy.schools"
+              :options="schoolOptions"
             />
           </sui-form-field>
           <sui-form-field>
@@ -100,9 +100,26 @@
   export default {
     name: 'Register',
 
-    computed: mapGetters({
-      user: 'user',
-    }),
+    computed: {
+      ...mapGetters({
+        user: 'user',
+        schools: 'schools',
+        countries: 'countries',
+      }),
+      countryOptions: function () {
+        return this.countries.map(({ code, name }) => ({
+          flag: code.toLowerCase(),
+          value: code,
+          text: name,
+        }));
+      },
+      schoolOptions: function () {
+        return this.schools.map(({id, name}) => ({
+          value: id,
+          text: name,
+        }));
+      },
+    },
 
     data() {
       return {
@@ -112,10 +129,6 @@
             { value: 'F', text: 'Female' },
             { value: 'O', text: 'Other' },
           ],
-          schools: [
-            { value: 1, text: 'KAIST' },
-          ],
-          countries: [],
         },
         colors: this.$store.state.colors,
         rememberMe: true,
@@ -125,12 +138,8 @@
     },
 
     async mounted() {
-      const response = await this.axios.get('accounts/countries/');
-      this.policy.countries = response.data.map(({ code, name }) => ({
-        flag: code.toLowerCase(),
-        value: code,
-        text: name,
-      }));
+      this.$store.dispatch('getCountries');
+      this.$store.dispatch('getSchools');
     },
 
     methods: {
