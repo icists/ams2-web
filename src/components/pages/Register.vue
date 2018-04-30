@@ -101,9 +101,9 @@
             <basic-select
               placeholder="Find your school"
               :options="policy.schools"
-              :selected-option="policy.schools.find(school => school.id === user.school)"
+              :selected-option="school"
               @searchchange="value => updateSchools(value)"
-              @select="(school) => { user.school = school.id }"
+              @select="onSelectSchool"
             />
           </sui-form-field>
           <sui-form-field>
@@ -165,6 +165,7 @@
         rememberMe: true,
         fetchUser: false,
         error: false,
+        school: undefined,
       };
     },
 
@@ -211,7 +212,7 @@
       register() {
         const user = this.user;
         this.$auth.register({
-          data: user,
+          data: { ...user, school: this.school.value },
           success(res) {
             localStorage.setItem('default_auth_token', res.data.token);
             this.$router.push('/');
@@ -228,6 +229,9 @@
           value: id,
           text: name,
         }));
+      },
+      onSelectSchool(school) {
+        this.school = school;
       },
     },
 
