@@ -2,9 +2,9 @@
   <div>
     <div id="background">
       <div>
-        <base-row v-show="!showLogin">
+        <base-row v-show="!showLogin" class="slogan-row">
           <base-header
-            text="Meet People, Get Inspired."
+            :chunked_texts="['Meet People,', 'Get Inspired.']"
             :color="colors.white"
             :size="3"
           />
@@ -28,12 +28,14 @@
             id="input-email"
             v-model="body.email"
             placeholder="Email address"
+            v-on:keyup.enter="login()"
           />
           <input
             class="column"
             type="password"
             v-model="body.password"
             placeholder="Password"
+            v-on:keyup.enter="login()"
           />
           <base-button
             class="column"
@@ -132,5 +134,10 @@
   #input-email {
     border-bottom-color: #EEEEEE;
     border-bottom-width: 1px;
+  }
+
+  .slogan-row .row.lg {
+    padding-left: 0;
+    padding-right: 0;
   }
 </style>

@@ -100,7 +100,7 @@
             color: colors.lightGray,
             textColor: colors.black,
             title: 'Apply Now',
-            text: 'You can apply now for ICISTS 2017.\nGrab the chance to meet people and get inspired.',
+            text: 'You can apply now for ICISTS 2018.\nGrab the chance to meet people and get inspired.',
             buttons: [
               { link: '/applications', text: 'Apply' },
             ],
@@ -109,7 +109,7 @@
             color: colors.yellow,
             textColor: colors.white,
             title: 'Waiting for Review',
-            text: 'Your application is waiting for organizing committee’s review.\nYou can revise it anytime before May 31st.',
+            text: 'Your application is waiting for organizing committee’s review.\nYou can revise it anytime before May 30th.',
             buttons: [
               { link: '/applications', text: 'Review Application' },
             ],
@@ -128,7 +128,7 @@
             color: colors.red,
             textColor: colors.white,
             title: 'Rejected',
-            text: 'Unfortunately, your application is not eligible to ICISTS 2017. But you can still edit and submit again.',
+            text: 'Unfortunately, your application is not eligible to ICISTS 2018. But you can still edit and submit again.',
             buttons: [
               { link: '/applications', text: 'Review Application' },
             ],
