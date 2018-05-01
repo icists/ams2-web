@@ -98,12 +98,12 @@
         <sui-form-fields :field="2">
           <sui-form-field>
             <label>School</label>
-            <basic-select
+            <model-select
               placeholder="Find your school"
               :options="policy.schools"
-              :selected-option="policy.schools.find(school => school.id === user.school)"
+              v-model="user.school"
               @searchchange="value => updateSchools(value)"
-              @select="(school) => { user.school = school.id }"
+              @select="(school) => { user.school = school.value }"
             />
           </sui-form-field>
           <sui-form-field>
@@ -126,7 +126,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  import { BasicSelect } from 'vue-search-select'
+  import { ModelSelect } from 'vue-search-select';
   import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
 
   function phoneNumberValidation(value) {
@@ -135,7 +135,7 @@
     }
     return /^\+[0-9]*$/.test(value);
   }
-  
+
   function birthdayValidation(value) {
     if (typeof value === 'undefined' || value === null || value === '') {
       return true;
@@ -235,7 +235,7 @@
       BaseHeader: () => import('@/components/common/BaseHeader'),
       BaseRow: () => import('@/components/common/BaseRow'),
       BaseButton: () => import('@/components/common/BaseButton'),
-      BasicSelect,
+      ModelSelect,
     },
   };
 </script>
