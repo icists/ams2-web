@@ -196,6 +196,7 @@
     },
 
     async mounted() {
+      this.policy.schools = [{ text: this.user.schoolText, value: this.user.school }];
       const response = await this.axios.get('accounts/countries/');
       this.policy.countries = response.data.map(({ code, name }) => ({
         flag: code.toLowerCase(),
