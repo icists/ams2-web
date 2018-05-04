@@ -1,7 +1,7 @@
 <template>
   <div>
     <base-row>
-      <base-header text="Create an ICISTS account" class="header" />
+      <base-header :text="headerText[this.$route.name]" class="header" />
       <sui-form equalWidth size="large">
         <sui-form-field
           v-bind:class="{ 'error': $v.user.email.$error }" >
@@ -11,12 +11,13 @@
             @input="$v.user.email.$touch()"
             type="email"
             placeholder="applying@icists.org"
+            :disabled="persisted"
           />
           <sui-label class="red pointing above" v-if="$v.user.email.$error">
             Invalid Email
           </sui-label>
         </sui-form-field>
-        <sui-form-fields :field="2">
+        <sui-form-fields :field="2" v-if="!persisted">
           <sui-form-field :class="{ 'error': $v.user.password1.$error }">
             <label>Password</label>
             <input
@@ -116,7 +117,7 @@
         id="save-button"
         link="#"
         :color="colors.icistsBlue"
-        @click.native="register()"
+        @click.native="persisted ? update() : register()"
       >
         Done
       </base-button>
@@ -152,6 +153,11 @@
 
     data() {
       return {
+        headerText: {
+          'Register': 'Create an ICISTS account',
+          'Profile': 'Edit Account',
+        },
+        persisted: this.$route.name == 'Profile',
         policy: {
           genders: [
             { value: 'M', text: 'Male' },
@@ -196,6 +202,10 @@
     },
 
     async mounted() {
+      this.$store.dispatch('getUser');
+      this.$store.dispatch('getApplication');
+      this.$store.dispatch('getStage');
+
       this.policy.schools = [{ text: this.user.schoolText, value: this.user.school }];
       const response = await this.axios.get('accounts/countries/');
       this.policy.countries = response.data.map(({ code, name }) => ({
@@ -207,8 +217,19 @@
 
     methods: {
       ...mapActions([
-        'createUser',
+        'createUser', 'updateUser',
       ]),
+
+      async update() {
+        alert('Yay! Update!');
+        const user = this.user;
+        await this.$store.dispatch('updateUser', {
+          params: { id: this.user.id },
+          data: user,
+        });
+        this.$router.push('/dashboard');
+      },
+
       register() {
         const user = this.user;
         this.$auth.register({
