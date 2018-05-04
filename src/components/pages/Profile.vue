@@ -50,12 +50,12 @@
         <sui-form-fields :field="2">
           <sui-form-field>
             <label>School</label>
-            <sui-dropdown
+            <model-select
               placeholder="Find your school"
-              search
-              selection
-              v-model="user.school"
               :options="policy.schools"
+              v-model="user.school"
+              @searchchange="value => updateSchools(value)"
+              @select="(school) => { user.school = school.value }"
             />
           </sui-form-field>
           <sui-form-field>
@@ -78,6 +78,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
+  import { ModelSelect } from 'vue-search-select';
 
   export default {
     name: 'Profile',
@@ -94,9 +95,7 @@
             { value: 'F', text: 'Female' },
             { value: 'O', text: 'Other' },
           ],
-          schools: [
-            { value: 1, text: 'KAIST' },
-          ],
+          schools: [],
           countries: [],
         },
         colors: this.$store.state.colors,
@@ -107,6 +106,7 @@
     },
 
     async mounted() {
+      this.policy.schools = [{ text: this.user.schoolText, value: this.user.school }];
       const response = await this.axios.get('accounts/countries/');
       this.policy.countries = response.data.map(({ code, name }) => ({
         flag: code.toLowerCase(),
@@ -121,10 +121,16 @@
         const user = this.user;
         await this.$store.dispatch('updateUser', {
           params: { id: this.user.id },
-          data: user
+          data: user,
         });
-        this.$router.push('/dashboard')
-
+        this.$router.push('/dashboard');
+      },
+      async updateSchools(query) {
+        const response = await this.axios.get(`accounts/schools/?query=${query}`);
+        this.policy.schools = response.data.map(({ id, name }) => ({
+          value: id,
+          text: name,
+        }));
       },
       ...mapActions([
         'createUser', 'updateUser',
@@ -135,6 +141,7 @@
       BaseHeader: () => import('@/components/common/BaseHeader'),
       BaseRow: () => import('@/components/common/BaseRow'),
       BaseButton: () => import('@/components/common/BaseButton'),
+      ModelSelect,
     },
   };
 </script>
