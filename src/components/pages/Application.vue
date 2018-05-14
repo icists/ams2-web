@@ -102,24 +102,24 @@
         projectTopics: 'projectTopics',
         essayTopics: 'essayTopics',
       }),
-      projectTopicOptions: function() {
+      projectTopicOptions() {
         return this.projectTopics.map(({ number, title }) => ({
           value: number,
           text: title,
         }));
       },
-      essayTopicOptions: function() {
+      essayTopicOptions() {
         return this.essayTopics.map(({ number, title }) => ({
           value: number,
           text: title,
         }));
       },
-      essayTopicDescription: function() {
+      essayTopicDescription() {
         const selectedTopicNumber = this.application.essayTopic;
         const selectedTopic = this.essayTopics.find(topic => topic.number === selectedTopicNumber);
         return selectedTopic ? selectedTopic.description : 'Select a topic first.';
       },
-      appStage: function() {
+      appStage() {
         const stage = (this.application && this.application.stage) || this.stage;
         return this.stageMap[stage];
       },

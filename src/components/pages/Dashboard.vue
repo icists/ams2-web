@@ -67,12 +67,12 @@
         application: 'application',
         stage: 'stage',
       }),
-      appStatus: function() {
+      appStatus() {
         const isClosed = ['E', 'R', 'L'].indexOf(this.stage) < 0;
         const result = this.application.screeningResult || (isClosed ? 'C' : 'N');
         return this.appResults[result];
       },
-      orderStatus: function() {
+      orderStatus() {
         const result = this.application.screeningResult === 'A' ? 'ON' : 'NA';
         return this.orderResults[result];
       },
@@ -149,8 +149,8 @@
             text: 'Choose your options for the conference.',
             buttons: [
               { link: '/order', text: 'Proceed' },
-            ]
-          }
+            ],
+          },
         },
       };
     },
