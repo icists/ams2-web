@@ -63,7 +63,7 @@
         body: {
           email: '',
           password: '',
-        }
+        },
       };
     },
 
@@ -80,7 +80,7 @@
             redirect: { path: '/dashboard' },
           });
         } catch (error) {
-          alert('Incorrect email or password.')
+          alert('Incorrect email or password.');
         }
       },
     },

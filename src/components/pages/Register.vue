@@ -154,10 +154,10 @@
     data() {
       return {
         headerText: {
-          'Register': 'Create an ICISTS account',
-          'Profile': 'Edit Account',
+          Register: 'Create an ICISTS account',
+          Profile: 'Edit Account',
         },
-        persisted: this.$route.name == 'Profile',
+        persisted: this.$route.name === 'Profile',
         policy: {
           genders: [
             { value: 'M', text: 'Male' },
@@ -238,7 +238,7 @@
             localStorage.setItem('default_auth_token', res.data.token);
             this.$router.push('/');
           },
-          error(error) {
+          error() {
             alert('Something wrong with your registration form! Please check again.');
           },
           rememberMe: true,
