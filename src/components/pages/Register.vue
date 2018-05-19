@@ -92,7 +92,7 @@
               @input="$v.user.phoneNumber.$touch()"
             />
             <sui-label class="red pointing above" v-if="$v.user.phoneNumber.$error">
-              Include Country Code (e.g. +82), No Hyphen
+              Include Country Code (e.g. +821012345678), No Hyphen
             </sui-label>
           </sui-form-field>
         </sui-form-fields>
@@ -233,16 +233,12 @@
 
       register() {
         const user = this.user;
+        user.password = user.password1;
         this.$auth.register({
           data: { ...user, school: this.school.value },
-          success(res) {
-            localStorage.setItem('default_auth_token', res.data.token);
-            this.$router.push('/');
-          },
           error() {
             alert('Something wrong with your registration form! Please check again.');
           },
-          rememberMe: true,
         });
       },
 
