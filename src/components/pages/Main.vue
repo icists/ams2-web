@@ -83,8 +83,6 @@
         try {
           await this.$auth.login({
             data: this.body,
-            rememberMe: false,
-            fetchUser: true,
             redirect: { path: '/dashboard' },
           });
         } catch (error) {
