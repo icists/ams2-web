@@ -32,9 +32,6 @@ const user = new Vapi({
 
 user.getters = {
   user: state => state.user,
-  user_parsed(state) {
-    return state.user;
-  },
 };
 
 export default user;

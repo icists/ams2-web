@@ -12,7 +12,7 @@
             <base-button
               link="/"
               :color="colors.white"
-              @click.native="onShowLogin()"
+              @click.native="toggleLogin()"
             >
               <span class="button-text">Login</span>
             </base-button>
@@ -38,13 +38,21 @@
             v-on:keyup.enter="login()"
           />
           <base-button
-            class="column"
-            id="login-button"
+            class="column login-button"
             link="/dashboard"
             :color="colors.mediumBlue"
             @click.native="login()"
           >
             <span id="login-text">Go!</span>
+          </base-button>
+          <br/>
+          <base-button
+            class="column login-button"
+            link="/"
+            :color="colors.mediumBlue"
+            @click.native="toggleLogin()"
+          >
+            <span id="back-text">Back to Main</span>
           </base-button>
         </div>
       </div>
@@ -68,15 +76,13 @@
     },
 
     methods: {
-      onShowLogin() {
-        this.showLogin = true;
+      toggleLogin() {
+        this.showLogin = !this.showLogin;
       },
       async login() {
         try {
           await this.$auth.login({
             data: this.body,
-            rememberMe: false,
-            fetchUser: false,
             redirect: { path: '/dashboard' },
           });
         } catch (error) {
@@ -129,7 +135,7 @@
     outline: none;
   }
 
-  #login-button {
+  .login-button {
     text-align: center;
     padding: 1rem !important;
     margin: 0.5rem 0 0 !important;

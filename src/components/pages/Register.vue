@@ -93,19 +93,19 @@
               placeholder="+821012345678"
             />
             <sui-label class="red pointing above" v-if="$v.user.phoneNumber.$error">
-              Include Country Code (e.g. +82), No Hyphen
+              Include Country Code (e.g. +821012345678), No Hyphen
             </sui-label>
           </sui-form-field>
         </sui-form-fields>
         <sui-form-fields :field="2">
           <sui-form-field>
             <label>School</label>
-            <model-select
+            <basic-select
               placeholder="Find your school"
               :options="policy.schools"
-              v-model="user.school"
+              :selected-option="school"
               @searchchange="value => updateSchools(value)"
-              @select="(school) => { user.school = school.value }"
+              @select="onSelectSchool"
             />
           </sui-form-field>
           <sui-form-field>
@@ -128,7 +128,7 @@
 
 <script>
   import { mapGetters, mapActions } from 'vuex';
-  import { ModelSelect } from 'vue-search-select';
+  import { BasicSelect } from 'vue-search-select';
   import { required, email, minLength, sameAs } from 'vuelidate/lib/validators';
 
   function phoneNumberValidation(value) {
@@ -172,6 +172,7 @@
         rememberMe: true,
         fetchUser: false,
         error: false,
+        school: undefined,
       };
     },
 
@@ -233,18 +234,15 @@
 
       register() {
         const user = this.user;
+        user.password = user.password1;
         this.$auth.register({
-          data: user,
-          success(res) {
-            localStorage.setItem('default_auth_token', res.data.token);
-            this.$router.push('/');
-          },
+          data: { ...user, school: this.school.value },
           error() {
             alert('Something wrong with your registration form! Please check again.');
           },
-          rememberMe: true,
         });
       },
+
       async updateSchools(query) {
         const response = await this.axios.get(`accounts/schools/?query=${query}`);
         this.policy.schools = response.data.map(({ id, name }) => ({
@@ -252,12 +250,16 @@
           text: name,
         }));
       },
+
+      onSelectSchool(school) {
+        this.school = school;
+      },
     },
 
     components: {
       BaseHeader: () => import('@/components/common/BaseHeader'),
       BaseButton: () => import('@/components/common/BaseButton'),
-      ModelSelect,
+      BasicSelect,
     },
   };
 </script>
