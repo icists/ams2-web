@@ -7,6 +7,9 @@ const policy = new Vapi({
     stage: {},
     essayTopics: [],
     projectTopics: [],
+    accommodations: [],
+    options: [],
+    paymentInfo: {},
   },
 })
   .get({
@@ -24,12 +27,30 @@ const policy = new Vapi({
     property: 'projectTopics',
     path: '/policy/project-topics/',
   })
+  .get({
+    action: 'getAccommodations',
+    property: 'accommodations',
+    path: '/policy/accommodations/',
+  })
+  .get({
+    action: 'getOptions',
+    property: 'options',
+    path: '/policy/options/',
+  })
+  .get({
+    action: 'getPaymentInfo',
+    property: 'paymentInfo',
+    path: '/policy/payment-info/',
+  })
   .getStore();
 
 policy.getters = {
   stage: state => state.stage.currentStage,
   essayTopics: state => state.essayTopics,
   projectTopics: state => state.projectTopics,
+  accommodations: state => state.accommodations,
+  options: state => state.options,
+  paymentInfo: state => state.paymentInfo,
 };
 
 export default policy;
