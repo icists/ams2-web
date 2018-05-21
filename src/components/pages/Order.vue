@@ -45,25 +45,11 @@
         </sui-form-field>
         <sui-form-field>
           <label>Other Options</label>
-          <sui-form-field>
+          <sui-form-field v-for="option in selectableOptions" :key="option.code">
             <sui-checkbox
               toggle
-              v-model="selections.breakfast"
-              :label="`Breakfast (${getPriceText('breakfast')})`"
-            />
-          </sui-form-field>
-          <sui-form-field>
-            <sui-checkbox
-              toggle
-              v-model="selections.tshirts"
-              :label="`T-shirts (${getPriceText('tshirts')})`"
-            />
-          </sui-form-field>
-          <sui-form-field>
-            <sui-checkbox
-              toggle
-              v-model="selections.pre"
-              :label="`Pre-conference Banquet (${getPriceText('pre')})`"
+              v-model="selections[option.code]"
+              :label="`${option.description} (${getPriceText(option.code)})`"
             />
           </sui-form-field>
         </sui-form-field>
@@ -84,17 +70,13 @@
             <sui-table-cell>Group Discount</sui-table-cell>
             <sui-table-cell text-align="right">{{getPriceText('group')}}</sui-table-cell>
           </sui-table-row>
-          <sui-table-row v-if="selections.breakfast">
-            <sui-table-cell>Breakfast</sui-table-cell>
-            <sui-table-cell text-align="right">{{getPriceText('breakfast')}}</sui-table-cell>
-          </sui-table-row>
-          <sui-table-row v-if="selections.tshirts">
-            <sui-table-cell>T-shirts</sui-table-cell>
-            <sui-table-cell text-align="right">{{getPriceText('tshirts')}}</sui-table-cell>
-          </sui-table-row>
-          <sui-table-row v-if="selections.pre">
-            <sui-table-cell>Pre-conference Banquet</sui-table-cell>
-            <sui-table-cell text-align="right">{{getPriceText('pre')}}</sui-table-cell>
+          <sui-table-row
+            v-for="option in selectableOptions"
+            :key="option.code"
+            v-if="selections[option.code]"
+          >
+            <sui-table-cell>{{option.description}}</sui-table-cell>
+            <sui-table-cell text-align="right">{{getPriceText(option.code)}}</sui-table-cell>
           </sui-table-row>
         </sui-table-body>
         <sui-table-footer>
@@ -108,29 +90,14 @@
       <base-header text="Payment" class="header" />
       <sui-table basic="very">
         <sui-table-body>
-          <sui-table-row>
-            <sui-table-cell :width="8">Bank Name</sui-table-cell>
-            <sui-table-cell>{{paymentInfo.bankName}}</sui-table-cell>
-          </sui-table-row>
-          <sui-table-row>
-            <sui-table-cell>Branch</sui-table-cell>
-            <sui-table-cell>{{paymentInfo.bankBranch}}</sui-table-cell>
-          </sui-table-row>
-          <sui-table-row>
-            <sui-table-cell>Account Number</sui-table-cell>
-            <sui-table-cell>{{paymentInfo.accountNumber}}</sui-table-cell>
-          </sui-table-row>
-          <sui-table-row>
-            <sui-table-cell>Recipient</sui-table-cell>
-            <sui-table-cell>{{paymentInfo.recipient}}</sui-table-cell>
-          </sui-table-row>
-          <sui-table-row>
-            <sui-table-cell>SWIFT Code</sui-table-cell>
-            <sui-table-cell>{{paymentInfo.swiftCode}}</sui-table-cell>
+          <sui-table-row v-for="item in paymentInfoItems" :key="item.code">
+            <sui-table-cell :width="8">{{item.description}}</sui-table-cell>
+            <sui-table-cell>{{paymentInfo[item.code]}}</sui-table-cell>
           </sui-table-row>
         </sui-table-body>
       </sui-table>
-      <sui-divider horizontal>Or</sui-divider><sui-table basic="very">
+      <sui-divider horizontal>Or</sui-divider>
+      <sui-table basic="very">
         <sui-table-body>
           <sui-table-row>
             <sui-table-cell :width="8">PayPal</sui-table-cell>
@@ -215,17 +182,12 @@
         if (this.groupDiscount) {
           total += getPrice('group');
         }
-        // Breakfast
-        if (this.selections.breakfast) {
-          total += getPrice('breakfast');
-        }
-        // T-shirts
-        if (this.selections.tshirts) {
-          total += getPrice('tshirts');
-        }
-        // Pre-conference banquet
-        if (this.selections.pre) {
-          total += getPrice('pre');
+        // Other options
+        for (const option of this.selectableOptions) {
+          const { code } = option;
+          if (this.selections[code]) {
+            total += getPrice(code);
+          }
         }
         return `${total} ${preferredCurrency}`;
       },
@@ -257,11 +219,23 @@
           { value: 'KRW', text: 'KRW' },
           { value: 'USD', text: 'USD' },
         ],
+        selectableOptions: [
+          { code: 'breakfast', description: 'Breakfast' },
+          { code: 'tshirts', description: 'T-shirts' },
+          { code: 'pre', description: 'Pre-conference Banquet' },
+        ],
         selections: {
           breakfast: false,
           tshirts: false,
           pre: false,
         },
+        paymentInfoItems: [
+          { code: 'bankName', description: 'Bank Name' },
+          { code: 'bankBranch', description: 'Branch' },
+          { code: 'accountNumber', description: 'Account Number' },
+          { code: 'recipient', description: 'Recipient' },
+          { code: 'swiftCode', description: 'SWIFT Code' },
+        ],
       };
     },
 
@@ -281,20 +255,15 @@
           id = getId('group');
           if (id) options.push(id);
         }
-        // Breakfast
-        if (this.selections.breakfast) {
-          id = getId('breakfast');
-          if (id) options.push(id);
-        }
-        // T-shirts
-        if (this.selections.tshirts) {
-          id = getId('tshirts');
-          if (id) options.push(id);
-        }
-        // Pre-conference banquet
-        if (this.selections.pre) {
-          id = getId('pre');
-          if (id) options.push(id);
+        // Other options
+        for (const option of selectableOptions) {
+          const { code } = option;
+          if (this.selections[code]) {
+            id = getId(code);
+            if (id) {
+              options.push(id);
+            }
+          }
         }
         this.order.options = options;
 
