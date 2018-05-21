@@ -3,25 +3,20 @@
     class="nav-bar"
     :style="{ backgroundColor: color }"
   >
-    <base-row>
+    <sui-container text>
       <slot/>
-    </base-row>
+    </sui-container>
   </div>
 </template>
 
 <script>
   export default {
     name: 'BaseNavBar',
-
     props: {
       color: {
         type: String,
         required: true,
       },
-    },
-
-    components: {
-      BaseRow: () => import('./BaseRow'),
     },
   };
 </script>

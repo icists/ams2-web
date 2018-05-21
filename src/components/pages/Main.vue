@@ -2,9 +2,9 @@
   <div>
     <div id="background">
       <div>
-        <base-row v-show="!showLogin" class="slogan-row">
+        <div class="container slogan-row" v-show="!showLogin">
           <base-header
-            :chunked_texts="['Meet People,', 'Get Inspired.']"
+            :chunks="['Meet People,', 'Get Inspired.']"
             :color="colors.white"
             :size="3"
           />
@@ -20,8 +20,8 @@
               <span class="button-text">Create account</span>
             </base-button>
           </div>
-        </base-row>
-        <base-row v-show="showLogin">
+        </div>
+        <div class="container" v-show="showLogin">
           <base-header text="Login" :color="colors.white" />
           <input
             class="column"
@@ -54,7 +54,7 @@
           >
             <span id="back-text">Back to Main</span>
           </base-button>
-        </base-row>
+        </div>
       </div>
     </div>
   </div>
@@ -93,7 +93,6 @@
 
     components: {
       BaseHeader: () => import('@/components/common/BaseHeader'),
-      BaseRow: () => import('@/components/common/BaseRow'),
       BaseButton: () => import('@/components/common/BaseButton'),
     },
   };
@@ -109,6 +108,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .container {
+    max-width: 1000px;
+    zoom: 1;
+    margin: auto;
   }
 
   .button-text {

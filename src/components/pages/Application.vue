@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-row>
+    <sui-container text>
       <sui-form equalWidth size="large">
         <base-header text="Application" class="header" />
         <sui-form-fields :field="2">
@@ -84,7 +84,7 @@
       >
         Save
       </base-button>
-    </base-row>
+    </sui-container>
   </div>
 </template>
 
@@ -171,9 +171,7 @@
 
     components: {
       BaseButton: () => import('@/components/common/BaseButton'),
-      BaseColumn: () => import('@/components/common/BaseColumn'),
       BaseHeader: () => import('@/components/common/BaseHeader'),
-      BaseRow: () => import('@/components/common/BaseRow'),
     },
   };
 </script>

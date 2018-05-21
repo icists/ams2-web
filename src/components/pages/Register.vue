@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-row>
+    <sui-container text>
       <base-header :text="headerText[this.$route.name]" class="header" />
       <sui-form equalWidth size="large">
         <sui-form-field
@@ -46,11 +46,11 @@
         <sui-form-fields :field="2">
           <sui-form-field>
             <label>First Name</label>
-            <input v-model="user.firstName" placeholder="Harry" />
+            <input v-model="user.firstName" placeholder="Kildong" />
           </sui-form-field>
           <sui-form-field>
             <label>Last Name</label>
-            <input v-model="user.lastName" placeholder="Potter" />
+            <input v-model="user.lastName" placeholder="Hong" />
           </sui-form-field>
         </sui-form-fields>
         <sui-form-fields :field="2">
@@ -90,6 +90,7 @@
             <input
               v-model="user.phoneNumber"
               @input="$v.user.phoneNumber.$touch()"
+              placeholder="+821012345678"
             />
             <sui-label class="red pointing above" v-if="$v.user.phoneNumber.$error">
               Include Country Code (e.g. +821012345678), No Hyphen
@@ -121,7 +122,7 @@
       >
         Done
       </base-button>
-    </base-row>
+    </sui-container>
   </div>
 </template>
 
@@ -257,7 +258,6 @@
 
     components: {
       BaseHeader: () => import('@/components/common/BaseHeader'),
-      BaseRow: () => import('@/components/common/BaseRow'),
       BaseButton: () => import('@/components/common/BaseButton'),
       BasicSelect,
     },
