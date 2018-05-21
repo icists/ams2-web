@@ -12,7 +12,6 @@
 <script>
   export default {
     name: 'BaseNavBarItem',
-
     props: {
       to: {
         type: String,
@@ -30,10 +29,6 @@
         type: Boolean,
         default: false,
       },
-    },
-
-    components: {
-      BaseRow: () => import('./BaseRow'),
     },
   };
 </script>

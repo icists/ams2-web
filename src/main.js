@@ -8,19 +8,18 @@ import SuiVue from 'semantic-ui-vue';
 import 'semantic-ui-css/semantic.min.css';
 import 'vue-form-wizard/dist/vue-form-wizard.min.css';
 
-
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueAuth from '@websanova/vue-auth';
+import VueAuthHttp from '@websanova/vue-auth/drivers/http/axios.1.x';
+import VueAuthRouter from '@websanova/vue-auth/drivers/router/vue-router.2.x';
 
 import router from './router';
 import jwtAuth from './jwtAuth';
 import BaseButton from './components/common/BaseButton';
 import BaseCardBoard from './components/common/BaseCardBoard';
-import BaseColumn from './components/common/BaseColumn';
 import BaseHeader from './components/common/BaseHeader';
 import BaseNavBar from './components/common/BaseNavBar';
-import BaseRow from './components/common/BaseRow';
 
 import App from './App';
 import store from './store';
@@ -37,8 +36,8 @@ Vue.use(VueAuth, {
   fetchData: { url: '/accounts/user/', enabled: false },
   registerData: { url: '/accounts/registration/', method: 'POST', redirect: '/' },
   auth: jwtAuth,
-  http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
-  router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
+  http: VueAuthHttp,
+  router: VueAuthRouter,
 });
 Vue.use(Vuelidate);
 
@@ -58,8 +57,6 @@ Vue.use(VueFormWizard);
 
 Vue.component('BaseButton', BaseButton);
 Vue.component('BaseHeader', BaseHeader);
-Vue.component('BaseColumn', BaseColumn);
-Vue.component('BaseRow', BaseRow);
 Vue.component('BaseCardBoard', BaseCardBoard);
 Vue.component('BaseNavBar', BaseNavBar);
 

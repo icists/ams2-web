@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-row>
+    <sui-container text>
       <base-header :text="headerText[this.$route.name]" class="header" />
       <sui-form equalWidth size="large">
         <sui-form-field
@@ -122,7 +122,7 @@
       >
         Done
       </base-button>
-    </base-row>
+    </sui-container>
   </div>
 </template>
 
@@ -256,7 +256,6 @@
 
     components: {
       BaseHeader: () => import('@/components/common/BaseHeader'),
-      BaseRow: () => import('@/components/common/BaseRow'),
       BaseButton: () => import('@/components/common/BaseButton'),
       ModelSelect,
     },

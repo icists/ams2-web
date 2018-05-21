@@ -3,9 +3,9 @@
     class="header"
     :style="style"
   >
-    <span v-if="chunked_texts != null">
-      <span v-for="chunked_text in chunked_texts">
-        {{chunked_text}}
+    <span v-if="chunks">
+      <span v-for="chunk in chunks">
+        {{chunk}}
         <br class="rwd-break">
       </span>
     </span>
@@ -24,7 +24,7 @@
         type: String,
         required: true,
       },
-      chunked_texts: {
+      chunks: {
         type: Array,
         required: false,
       },

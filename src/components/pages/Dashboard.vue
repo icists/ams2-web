@@ -1,6 +1,6 @@
 <template>
   <div v-if="user != null && application != null">
-    <base-row>
+    <div id="container">
       <base-card-board :color="colors.lightGray">
         <base-header :text="user.fullName"/>
         <p>
@@ -51,7 +51,7 @@
           </base-button>
         </div>
       </base-card-board>
-    </base-row>
+    </div>
   </div>
 </template>
 
@@ -159,7 +159,6 @@
       BaseButton: () => import('@/components/common/BaseButton'),
       BaseCardBoard: () => import('@/components/common/BaseCardBoard'),
       BaseHeader: () => import('@/components/common/BaseHeader'),
-      BaseRow: () => import('@/components/common/BaseRow'),
     },
   };
 </script>
@@ -184,5 +183,12 @@
 
   .emphasis {
     font-weight: bold;
+  }
+
+  #container {
+    max-width: 1000px;
+    padding: 0 4%;
+    margin: auto;
+    font-family: 'Helvetica Neue', sans-serif;
   }
 </style>
