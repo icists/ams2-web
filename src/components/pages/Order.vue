@@ -40,7 +40,7 @@
           />
         </sui-form-field>
         <sui-form-field>
-          <label>Dieatry Preferences (if any)</label>
+          <label>Dietary Preferences (if any)</label>
           <input v-model="order.dietaryPreferences" />
         </sui-form-field>
         <sui-form-field>
