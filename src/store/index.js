@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import policy from './modules/policy';
 import user from './modules/user';
 import applications from './modules/applications';
+import order from './modules/order';
 
 Vue.use(Vuex);
 
@@ -11,6 +12,7 @@ export default new Vuex.Store({
     policy,
     user,
     applications,
+    order,
   },
   state: {
     colors: {
