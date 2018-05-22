@@ -138,12 +138,12 @@
         return this.stageMap[stage];
       },
       accommodationOptions() {
-        return this.accommodations.map(({ code, description, priceKrw, priceUsd, capacity }) => {
+        return this.accommodations.map(({ id, code, description, priceKrw, priceUsd, capacity }) => {
           const priceText = this.order.preferredCurrency === 'KRW' ?
             `${priceKrw} KRW` :
             `${priceUsd} USD`;
           return {
-            value: code,
+            value: id,
             text: `${description} - ${capacity} people / room (${priceText})`,
           };
         });
