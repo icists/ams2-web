@@ -138,12 +138,12 @@
         return this.stageMap[stage];
       },
       accommodationOptions() {
-        return this.accommodations.map(({ id, description, priceKrw, priceUsd, capacity }) => {
+        return this.accommodations.map(({ code, description, priceKrw, priceUsd, capacity }) => {
           const priceText = this.order.preferredCurrency === 'KRW' ?
             `${priceKrw} KRW` :
             `${priceUsd} USD`;
           return {
-            value: id,
+            value: code,
             text: `${description} - ${capacity} people / room (${priceText})`,
           };
         });
@@ -256,7 +256,7 @@
           if (id) options.push(id);
         }
         // Other options
-        for (const option of selectableOptions) {
+        for (const option of this.selectableOptions) {
           const { code } = option;
           if (this.selections[code]) {
             id = getId(code);
