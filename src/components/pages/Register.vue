@@ -10,7 +10,7 @@
             v-model="user.email"
             @input="$v.user.email.$touch()"
             type="email"
-            placeholder="applying@icists.org"
+            placeholder="example@example.com"
             :disabled="persisted"
           />
           <sui-label class="red pointing above" v-if="$v.user.email.$error">
