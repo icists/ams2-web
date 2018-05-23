@@ -138,10 +138,8 @@
         return this.stageMap[stage];
       },
       accommodationOptions() {
-        return this.accommodations.map(({ id, code, description, priceKrw, priceUsd, capacity }) => {
-          const priceText = this.order.preferredCurrency === 'KRW' ?
-            `${priceKrw} KRW` :
-            `${priceUsd} USD`;
+        return this.accommodations.map(({ id, code, description, capacity }) => {
+          const priceText = this.getPriceText(code);
           return {
             value: id,
             text: `${description} - ${capacity} people / room (${priceText})`,
@@ -189,7 +187,7 @@
             total += getPrice(code);
           }
         }
-        return `${total} ${preferredCurrency}`;
+        return `${this.formatPrice(total.toString())} ${preferredCurrency}`;
       },
     },
 
@@ -294,7 +292,13 @@
         if (!price) {
           return '-';
         }
-        return `${price[preferredCurrency]} ${preferredCurrency}`;
+        return `${this.formatPrice(price[preferredCurrency])} ${preferredCurrency}`;
+      },
+      formatPrice(priceText) {
+        if (priceText.length > 3) {
+          return priceText.slice(0, -3) + ',' + priceText.slice(-3);
+        }
+        return priceText;
       },
       ...mapActions([
         'createApplication',
