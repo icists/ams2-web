@@ -4,7 +4,7 @@ import Vue from 'vue';
 const order = new Vapi({
   axios: Vue.axios,
   state: {
-    order: {},
+    order: null,
   },
 })
   .get({
@@ -13,6 +13,9 @@ const order = new Vapi({
     path: '/registration/order/',
     onSuccess: (state, payload) => {
       state.order = payload.data;
+    },
+    onError: (state) => {
+      state.order = {};
     },
   })
   .post({

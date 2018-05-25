@@ -57,6 +57,17 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import _ from 'lodash';
+
+  const CLOSED = 'C';
+  const NOT_APPLIED = 'N';
+
+  const NOT_AVIALABLE = 'NA';
+  const NOT_ORDERED = 'NO';
+  const NOT_CONFIRMED = 'NC';
+  const CLEAR = 'C';
+  const PAID_LESS = 'L';
+  const PAID_MORE = 'M';
 
   export default {
     name: 'Dashboard',
@@ -65,15 +76,29 @@
       ...mapGetters({
         user: 'user',
         application: 'application',
+        order: 'order',
         stage: 'stage',
       }),
       appStatus() {
         const isClosed = ['E', 'R', 'L'].indexOf(this.stage) < 0;
-        const result = this.application.screeningResult || (isClosed ? 'C' : 'N');
+        const result = this.application.screeningResult || (isClosed ? CLOSED : NOT_APPLIED);
         return this.appResults[result];
       },
       orderStatus() {
-        const result = this.application.screeningResult === 'A' ? 'ON' : 'NA';
+        let result;
+        if (this.application.screeningResult !== 'A') {
+          result = NOT_AVIALABLE;
+        } else if (_.isEmpty(this.order)) {
+          result = NOT_ORDERED;
+        } else if (this.order.paidAmount === '0') {
+          result = NOT_CONFIRMED;
+        } else if (this.order.paymentStatus.includes('Clear')) {
+          result = CLEAR;
+        } else if (this.order.paymentStatus.includes('less')) {
+          result = PAID_LESS;
+        } else if (this.order.paymentStatus.includes('more')) {
+          result = PAID_MORE;
+        }
         return this.orderResults[result];
       },
     },
@@ -81,6 +106,7 @@
     created() {
       this.$store.dispatch('getUser');
       this.$store.dispatch('getApplication');
+      this.$store.dispatch('getOrder');
       this.$store.dispatch('getStage');
     },
 
@@ -89,14 +115,14 @@
       return {
         colors,
         appResults: {
-          C: {
+          [CLOSED]: {
             color: colors.lightGray,
             textColor: colors.gray,
             title: 'Closed',
             text: 'Application is currently closed.\nPlease come back in a few days.',
             buttons: [],
           },
-          N: {
+          [NOT_APPLIED]: {
             color: colors.lightGray,
             textColor: colors.black,
             title: 'Apply Now',
@@ -135,20 +161,56 @@
           },
         },
         orderResults: {
-          NA: {
+          [NOT_AVIALABLE]: {
             color: colors.lightGray,
             textColor: colors.gray,
             title: 'Not Available',
             text: 'You can place your order after your application is accepted.',
             buttons: [],
           },
-          ON: {
+          [NOT_ORDERED]: {
             color: colors.lightGray,
             textColor: colors.black,
             title: 'Order Now',
             text: 'Choose your options for the conference.',
             buttons: [
               { link: '/order', text: 'Proceed' },
+            ],
+          },
+          [NOT_CONFIRMED]: {
+            color: colors.yellow,
+            textColor: colors.white,
+            title: 'Payment Not Confirmed',
+            text: 'Your payment is not found yet. Make a payment and come back in a few days.',
+            buttons: [
+              { link: '/order', text: 'Review order' },
+            ],
+          },
+          [CLEAR]: {
+            color: colors.green,
+            textColor: colors.white,
+            title: 'Payment Confirmed',
+            text: 'Everything is done! Be ready for the amazing five days.',
+            buttons: [
+              { link: '/order', text: 'Review order' },
+            ],
+          },
+          [PAID_LESS]: {
+            color: colors.red,
+            textColor: colors.white,
+            title: 'Paid Less',
+            text: 'Your payment seems insufficient.\nPlease check your order and payment history, or contact help@icists.org.',
+            buttons: [
+              { link: '/order', text: 'Review order' },
+            ],
+          },
+          [PAID_MORE]: {
+            color: colors.yellow,
+            textColor: colors.white,
+            title: 'Paid More',
+            text: 'It seems you paid more.\nPlease contact help@icists.org to get a refund.',
+            buttons: [
+              { link: '/order', text: 'Review order' },
             ],
           },
         },

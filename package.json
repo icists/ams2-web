@@ -16,6 +16,7 @@
     "@websanova/vue-auth": "^2.21.10-beta",
     "axios": "^0.17.1",
     "element-ui": "^2.0.8",
+    "lodash": "^4.17.10",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-vue": "^0.2.6",
     "serve": "^6.5.5",
